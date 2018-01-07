@@ -26,12 +26,21 @@ namespace TaxiWebAndAPI.APIControllers
 
         //    return "ok";
         //}
+        /// <summary>
+        /// Get all cities registered
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public string[] GetCities()
         {
             return new string[] { "Bucarest" };
         }
-
+        /// <summary>
+        /// Get all taxis for a city
+        /// <see cref="GetCities"/>
+        /// </summary>
+        /// <param name="city">the city name</param>
+        /// <returns>an array of <see cref="TaxiAutorization"/></returns>
         [HttpGet]
         public TaxiAutorizations GetTaxis(string city)
         {
@@ -43,6 +52,11 @@ namespace TaxiWebAndAPI.APIControllers
                     throw new ArgumentException("only for " + string.Join(",", GetCities()));
             }
         }
+        /// <summary>
+        /// Get the taxy from the number - or null ( 204) if not found
+        /// </summary>
+        /// <param name="plateNumber"></param>
+        /// <returns></returns>
         [HttpGet]
         public TaxiAutorization GetTaxi(string plateNumber)
         {

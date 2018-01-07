@@ -7,6 +7,10 @@
     <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
    <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
 </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netcoreapp2.0\win10-x64\TaxiWebAndAPI.xml</DocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Remove="_PublishedWebsites\**" />
     <Content Remove="_PublishedWebsites\**" />

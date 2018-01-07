@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using System.IO;
+using Microsoft.Extensions.PlatformAbstractions;
 
 namespace TaxiWebAndAPI
 {
@@ -26,6 +28,8 @@ namespace TaxiWebAndAPI
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+                var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "TaxiWebAndAPI.xml");
+                c.IncludeXmlComments(filePath);
             });
         }
 
@@ -59,7 +63,8 @@ namespace TaxiWebAndAPI
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Taxi API");
+               
             });
 
         }
