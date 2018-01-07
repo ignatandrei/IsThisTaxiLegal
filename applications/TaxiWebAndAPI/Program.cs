@@ -19,8 +19,8 @@ namespace TaxiWebAndAPI
         {
             
             
-                var buc = new LoadBucarestTaxis();
-                BucarestTaxis = buc.TaxisFromCSV().Item1;
+                //var buc = new LoadBucarestTaxis();
+                //BucarestTaxis = buc.TaxisFromCSV().Item1;
             
             
             
