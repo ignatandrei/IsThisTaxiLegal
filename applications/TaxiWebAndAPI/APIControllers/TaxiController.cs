@@ -10,6 +10,21 @@ namespace TaxiWebAndAPI.APIControllers
 {
     public class TaxiController:Controller
     {
+        public string LoadBucarest()
+        {
+            try
+            {
+                var buc = new LoadBucarestTaxis();
+                var data = buc.TaxisFromCSV().Item1;
+            }
+            catch (Exception ex)
+            {
+
+                return ex.StackTrace;
+            }
+
+            return "ok";
+        }
         public string[] GetCities()
         {
             return new string[] { "Bucarest" };
