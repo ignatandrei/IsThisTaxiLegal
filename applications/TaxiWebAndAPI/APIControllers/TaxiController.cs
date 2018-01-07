@@ -8,6 +8,7 @@ using TaxiObjects;
 
 namespace TaxiWebAndAPI.APIControllers
 {
+    [Route("API/[controller]/[action]")]//for swagger
     public class TaxiController:Controller
     {
         //public string LoadBucarest()
@@ -25,10 +26,13 @@ namespace TaxiWebAndAPI.APIControllers
 
         //    return "ok";
         //}
+        [HttpGet]
         public string[] GetCities()
         {
             return new string[] { "Bucarest" };
         }
+
+        [HttpGet]
         public TaxiAutorizations GetTaxis(string city)
         {
             switch (city)
@@ -39,6 +43,7 @@ namespace TaxiWebAndAPI.APIControllers
                     throw new ArgumentException("only for " + string.Join(",", GetCities()));
             }
         }
+        [HttpGet]
         public TaxiAutorization GetTaxi(string plateNumber)
         {
             return Program.BucarestTaxis.FirstOrDefault(it => it.CarLicensed.PlateNumber.ToLower() == plateNumber?.ToLower());
