@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <PublishDir>$(OutDir)_PublishedWebsites\NetCoreWebApp\</PublishDir>
-  </PropertyGroup>
-<PropertyGroup> 
-  <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
+    <OutputType>Exe</OutputType>
+    <PublishDir>$(OutDir)_PublishedWebsites\NetCoreWebApp\</PublishDir> 
+    <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+   <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
 </PropertyGroup>
   <ItemGroup>
     <Compile Remove="_PublishedWebsites\**" />
