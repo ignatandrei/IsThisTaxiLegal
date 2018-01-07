@@ -5,8 +5,15 @@
     <PublishDir>$(OutDir)_PublishedWebsites\NetCoreWebApp\</PublishDir>
   </PropertyGroup>
   <PropertyGroup>
-    <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
+    <!--<PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>-->
+    
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="_PublishedWebsites\**" />
+    <Content Remove="_PublishedWebsites\**" />
+    <EmbeddedResource Remove="_PublishedWebsites\**" />
+    <None Remove="_PublishedWebsites\**" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" />
