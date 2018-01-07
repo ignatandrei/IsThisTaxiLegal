@@ -17,15 +17,15 @@ namespace TaxiWebAndAPI
         internal static TaxiAutorizations BucarestTaxis; 
         public static void Main(string[] args)
         {
-            try
-            {
-                var buc = new LoadBucarestTaxis();
-                BucarestTaxis = buc.TaxisFromCSV().Item1;
-            }
-            catch(Exception ex)
-            {
+            //try
+            //{
+            //    var buc = new LoadBucarestTaxis();
+            //    BucarestTaxis = buc.TaxisFromCSV().Item1;
+            //}
+            //catch(Exception ex)
+            //{
 
-            }
+            //}
             BuildWebHost(args).Run();
         }
 
