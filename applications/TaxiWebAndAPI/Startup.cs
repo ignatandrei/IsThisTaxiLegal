@@ -28,8 +28,8 @@ namespace TaxiWebAndAPI
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
-                var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "TaxiWebAndAPI.xml");
-                c.IncludeXmlComments(filePath);
+                //var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "TaxiWebAndAPI.xml");
+                //c.IncludeXmlComments(filePath);
             });
         }
 
