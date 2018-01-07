@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using TaxiObjects;
 
 namespace TaxiLoadingData
@@ -82,6 +83,28 @@ namespace TaxiLoadingData
     }
     public class LoadBucarestTaxis
     {
+
+        private string[] LinesFromCSV()
+        {
+            if (File.Exists("Bucuresti.csv"))
+                return File.ReadAllLines("Bucuresti.csv");
+
+            // download from web
+            var req = WebRequest.CreateHttp("https://raw.githubusercontent.com/ignatandrei/IsThisTaxiLegal/master/datas/Bucuresti.csv");
+            using (var resp = req.GetResponse()) {
+                using(var st = resp.GetResponseStream())
+                {
+                    using(var data= new StreamReader(st))
+                    {
+                        var lines = data.ReadToEnd();
+                        return lines.Split('\n');
+                    }
+                }
+            }
+            
+
+
+        }
         /// <summary>
         /// returns taxis and not parsed successfully lines
         /// </summary>
@@ -90,8 +113,8 @@ namespace TaxiLoadingData
         {
             var city = City.FromName("Bucarest");
             var taxis = new TaxiAutorizations();
-            var line = File.ReadAllLines("Bucuresti.csv");
-            var records = line
+            var lines = LinesFromCSV();
+            var records = lines
                 .Where(it=>!string.IsNullOrWhiteSpace(it))
                 .Select(it => new { line=it,bucTaxi=new BucarestCSV(it) })
                 .Select(t => new { t.line,t.bucTaxi,HasError=t.bucTaxi.Parse().Any()})
