@@ -35,6 +35,14 @@ namespace TaxiWebAndAPI.APIControllers
         {
             return new string[] { "Bucarest" };
         }
+        [HttpGet]
+        public KeyValuePair<string,int>[] GetLicenceStates()
+        {
+            return Enum.GetValues(typeof(LicenceState))
+                .Cast<LicenceState>()
+                .Select(it => new KeyValuePair<string, int>(it.ToString(), (int)it))
+                .ToArray();
+        }
         /// <summary>
         /// Get all taxis for a city
         /// <see cref="GetCities"/>

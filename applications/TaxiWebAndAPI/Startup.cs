@@ -27,7 +27,7 @@ namespace TaxiWebAndAPI
             services.AddMvc();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "Is This Taxi Legal API", Version = "v1" });
                 //var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "TaxiWebAndAPI.xml");
                 //c.IncludeXmlComments(filePath);
             });
@@ -63,7 +63,7 @@ namespace TaxiWebAndAPI
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Taxi API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Is This Taxi Legal API");
                
             });
 
