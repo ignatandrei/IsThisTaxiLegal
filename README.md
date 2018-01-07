@@ -1,7 +1,12 @@
 # IsThisTaxiLegal
 
-http://isthistaxilegal.apphb.com/taxi/GetTaxi?plateNumber=B17RAH
+
+Deployed on: http://isthistaxilegal.apphb.com 
+ 
+ 
+API: http://isthistaxilegal.apphb.com/swagger/ 
+            
+
+Sources: https://github.com/ignatandrei/IsThisTaxiLegal </p>
 
 
-
-http://isthistaxilegal.apphb.com/taxi/GetTaxis?city=Bucarest
