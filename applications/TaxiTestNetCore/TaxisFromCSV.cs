@@ -23,9 +23,18 @@ namespace TaxiTestNetCore
 
             var taxisOK = taxis.Item1;
             taxisOK.Count.ShouldBeGreaterThan(0);
-            taxisOK.Where(it => it.State == LicenceState.Valid).Count().ShouldBeGreaterThan(0);
-            taxisOK.Where(it => it.State == LicenceState.NotValid).Count().ShouldBeGreaterThan(0);
-            taxisOK.Where(it => it.State == LicenceState.ToBeAnalyzed).Count().ShouldBeGreaterThan(0);
+            var valid = taxisOK.Where(it => it.State == LicenceState.Valid);
+            valid.Any().ShouldBeTrue();
+            valid.Select(it => it.CarLicensed.PlateNumber).ShouldContain("B30LOB");
+
+            var notvalid = taxisOK.Where(it => it.State == LicenceState.NotValid);
+            notvalid.Any().ShouldBeTrue();
+            notvalid.Select(it => it.CarLicensed.PlateNumber).ShouldContain("B30FUV");
+
+            var analyze = taxisOK.Where(it => it.State == LicenceState.ToBeAnalyzed);
+            analyze.Any().ShouldBeTrue();
+            analyze.Select(it => it.CarLicensed.PlateNumber).ShouldContain("B09PVA");
+
             taxisOK.Where(it => it.State == LicenceState.Unknown).Count().ShouldBeLessThan(100);
 
 

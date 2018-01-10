@@ -138,10 +138,10 @@ namespace TaxiLoadingData
                 var state = record.StareAutTaxi;
                 switch (state)
                 {
-                    case var s when s.Contains("NEVALIDAT"):
+                    case var s when s.Contains("NEVALIDA"):
                         taxi.State = LicenceState.NotValid;
                         break;
-                    case var s when s.Contains("VALID"):
+                    case var s when s.Contains("VALIDA"):
                         taxi.State = LicenceState.Valid;
                         break;
                     case var s when s.Contains("ANALIZA"):
