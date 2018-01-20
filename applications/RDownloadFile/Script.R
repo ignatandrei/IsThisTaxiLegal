@@ -5,38 +5,45 @@ pacman::p_load('XML', "magrittr", "RCurl", "rlist", "rvest", "pdftools", "dplyr"
 #install.packages("RCurl")
 #install.packages("rlist")
 #install.packages("rvest")
+library(stringr)
 library(magrittr)
 library(XML)
 library(RCurl)
 library(rlist)
 library(rvest)
 getwd()
-site <-"http://www.pmb.ro"
-theurl <- paste(site, "/adrese_utile/transport_urban/autorizatii_taxi/autorizatii_TAXI.php", sep = "")
-content <- read_html(theurl)
+downloadTaxi <- function() { 
+    site <-"http://www.pmb.ro"
+    theurl <- paste(site, "/adrese_utile/transport_urban/autorizatii_taxi/autorizatii_TAXI.php", sep = "")
+    content <- read_html(theurl)
 
-fnames <- html_nodes(x = content, xpath = '//a') %>%
-             html_attr("href") %>%
-            .[grepl(glob2rx("*autorizatiilor*"), .)]
+    fnames <- html_nodes(x = content, xpath = '//a') %>%
+                 html_attr("href") %>%
+                .[grepl(glob2rx("*autorizatiilor*"), .)]
 
-print(head(fnames))
+    print(head(fnames))
 
-pdfTaxi.url = paste(site, fnames[1], sep = "")
-pdfTaxi.local="taxi.pdf"
-download.file(pdfTaxi.url, pdfTaxi.local, mode = "wb", cacheOK = F)
-data <- pdf_text(pdfTaxi.local)
+    pdfTaxi.url = paste(site, fnames[1], sep = "")
+    pdfTaxi.local="taxi.pdf"
+    download.file(pdfTaxi.url, pdfTaxi.local, mode = "wb", cacheOK = F)
+
+    print(head(data))
+    
+        getwd()
+        return (pdfTaxi.local);
+}
+
+#pdfTaxi <- downloadTaxi()
+pdfTaxi <-"taxi.pdf"
+data <- pdf_text(pdfTaxi)
 print(head(data))
+splitData <- unlist( lapply(data, function(x) {
+    strsplit(x, "\r\n")
+}))
+print(head(splitData))
 
-getwd()
-
-
-
-#print(head(fada))
-#cat(paste(head(fnames), collapse = "\n"))
-
-
-
-#cat(paste(head(fdata), collapse = "\n"))
+#write.table(data, "pdfTaxi.txt");
+#read.table(text = pdftext, row.names = NULL)
 #td <- content %>% html_nodes("pdf") %>% html_nodes("td")
 #td
 #fdata <- html_attr(fnames,name = "src")
