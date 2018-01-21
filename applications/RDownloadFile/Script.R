@@ -12,36 +12,48 @@ library(RCurl)
 library(rlist)
 library(rvest)
 getwd()
-downloadTaxi <- function() { 
-    site <-"http://www.pmb.ro"
+downloadTaxi <- function() {
+
+    site <- "http://www.pmb.ro"
+    # paste is concatenate strings !wtf!
     theurl <- paste(site, "/adrese_utile/transport_urban/autorizatii_taxi/autorizatii_TAXI.php", sep = "")
+    #read the html
     content <- read_html(theurl)
-
-    fnames <- html_nodes(x = content, xpath = '//a') %>%
-                 html_attr("href") %>%
-                .[grepl(glob2rx("*autorizatiilor*"), .)]
-
-    print(head(fnames))
-
-    pdfTaxi.url = paste(site, fnames[1], sep = "")
-    pdfTaxi.local="taxi.pdf"
-    download.file(pdfTaxi.url, pdfTaxi.local, mode = "wb", cacheOK = F)
-
-    print(head(data))
     
-        getwd()
-        return (pdfTaxi.local);
+    fnames <- html_nodes(x = content, xpath = '//a') %>% # find tags <a
+                 html_attr("href") %>% # find href attribute
+                .[grepl(glob2rx("*autorizatiilor*"), .)]  # glob2rx  - transform regular expression
+
+    #print(head(fnames))
+
+    pdfTaxi.url = paste(site, fnames[1], sep = "") # first url is the most recent
+    pdfTaxi.local="taxi.pdf" # how is the name of the local file downloaded
+    download.file(pdfTaxi.url, pdfTaxi.local, mode = "wb", cacheOK = F) #mode binary
+
+    #print(head(data))
+    
+        getwd()# see current directory 
+    return(pdfTaxi.local);    # return need () !wtf!
 }
 
-#pdfTaxi <- downloadTaxi()
-pdfTaxi <-"taxi.pdf"
-data <- pdf_text(pdfTaxi)
-print(head(data))
-splitData <- unlist( lapply(data, function(x) {
-    strsplit(x, "\r\n")
-}))
-print(head(splitData))
+pdfTaxi <- downloadTaxi()
+#pdfTaxi <-"taxi.pdf" #this for testing ,to not read html twice
+data <- pdf_text(pdfTaxi) # read all text
+#print(head(data))
 
+#splitData <- unlist( lapply(data, function(x) {
+    #strsplit(x, "\r\n")
+#}))
+
+splitData <- data %>%
+            lapply(function(x) { strsplit(x, "\r\n") }) %>% #lapply transform apply into list
+            unlist %>% # make a gigantic list
+.[grepl("^[0-9]", .)] %>% # the items that are interesting begins with number (the  id)
+.[grepl("[A-Z]", .)] # the items that are interesting contains names
+
+splitData %>% head(10) %>% print # showing data
+#print(head(splitData))
+# many tries - do not enter
 #write.table(data, "pdfTaxi.txt");
 #read.table(text = pdftext, row.names = NULL)
 #td <- content %>% html_nodes("pdf") %>% html_nodes("td")
