@@ -110,20 +110,23 @@ namespace TaxiLoadingData
                 return ret;
             }
         }
-            public async Task<TaxiAutorization> TaxiFromPlateSqlite(string plateNumber)
+        public async Task<TaxiAutorization> TaxiFromPlateSqlite(string plateNumber)
         {
-            using(var con =new SqliteConnection())
+            if (string.IsNullOrWhiteSpace(plateNumber))
+                return null;
+            plateNumber = plateNumber.ToLower();
+            using (var con = new SqliteConnection())
             {
                 con.ConnectionString = "Data Source=taxis.sqlite3;";
-                
+
                 //con.ConnectionString = "taxis.sqlite3";
                 await con.OpenAsync();
                 BucarestCSV bucarestCSV = null;
                 using (var cmd = con.CreateCommand())
                 {
-                    cmd.CommandText = "select * from bucuresti where [Nr. Inmatriculare Auto]=@plate";
+                    cmd.CommandText = "select * from bucuresti where lower([Nr. Inmatriculare Auto])=@plate";
                     cmd.Parameters.AddWithValue("@plate", plateNumber);
-                    using(var rd=await cmd.ExecuteReaderAsync())
+                    using (var rd = await cmd.ExecuteReaderAsync())
                     {
                         while (await rd.ReadAsync())
                         {
@@ -132,19 +135,19 @@ namespace TaxiLoadingData
                                 break;
                             Func<object, string> empty = (rec) =>
                             {
-                                if(rec==null)
+                                if (rec == null)
                                     return "";
                                 if (rec == DBNull.Value)
                                     return "";
                                 string value = rec.ToString();
                                 if (string.IsNullOrWhiteSpace(value))
                                     return "";
-                                
+
                                 return value;
                             };
                             string line = "";
                             line += empty(rd["Nr. Aut. Taxi"]);
-                            line +="|";
+                            line += "|";
                             line += empty(rd["Stare Aut. Taxi"]);
                             line += "|";
                             line += empty(rd["Nume Transportator"]);
@@ -157,7 +160,7 @@ namespace TaxiLoadingData
                             line += "|";
                             line += empty(rd["Expirare Valabilitate"]);
                             line += "|";
-                            line += empty(rd["Observatii"]); 
+                            line += empty(rd["Observatii"]);
                             bucarestCSV = new BucarestCSV(line);
                             var err = bucarestCSV.Parse().FirstOrDefault();
                             if (err != null)
@@ -165,7 +168,7 @@ namespace TaxiLoadingData
                         }
                     }
                 }
-                
+
                 return FromBucarestCSV(bucarestCSV);
             }
         }

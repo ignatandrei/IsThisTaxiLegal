@@ -24,6 +24,18 @@ namespace TaxiTestNetCore
 
 
         }
+
+        [TestMethod]
+        public async Task BucarestSampleDataNoCase()
+        {
+            var buc = new LoadBucarestTaxis();
+            var aut = await buc.TaxiFromPlateSqlite("B30LOB");
+            aut?.State.ShouldEqual(LicenceState.Valid);
+            var aut1 = await buc.TaxiFromPlateSqlite("b30lob");            
+            aut?.State.ShouldEqual(LicenceState.Valid);
+            
+
+        }
         [TestMethod]
         public async Task BucarestVerifyImportSqlLite()
         {
