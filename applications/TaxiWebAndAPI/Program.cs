@@ -14,13 +14,17 @@ namespace TaxiWebAndAPI
 {
     public class Program
     {
-        internal static TaxiAutorizations BucarestTaxis; 
+        //internal static TaxiAutorizations BucarestTaxis; 
         public static void Main(string[] args)
         {
 
-
-            var buc = new LoadBucarestTaxis();
-            BucarestTaxis = buc.TaxisFromCSV().Item1;
+            if (!File.Exists("taxis.sqlite3"))
+            {
+                var buc = new LoadBucarestTaxis();
+                buc.DownloadDatabaseSqlLite().GetAwaiter().GetResult();
+            }
+            //var buc = new LoadBucarestTaxis();
+            //BucarestTaxis = buc.TaxisFromCSV().Item1;
 
 
 

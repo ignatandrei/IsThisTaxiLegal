@@ -3,6 +3,7 @@ using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using TaxiObjects;
 
@@ -31,6 +32,23 @@ namespace TaxiLoadingData
             
 
 
+        }
+        public async Task DownloadDatabaseSqlLite()
+        {
+            var url ="https://raw.githubusercontent.com/ignatandrei/IsThisTaxiLegal/master/datas/taxis.sqlite3";
+            using (var client = new HttpClient())
+            {
+
+                using (var result = await client.GetAsync(url))
+                {
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var bytes=await result.Content.ReadAsByteArrayAsync();
+                        File.WriteAllBytes("taxis.sqlite3",bytes);
+                    }
+
+                }
+            }
         }
         public async Task<TaxiAutorizations> TaxiFromPlateSqliteAll ()
         {
@@ -189,11 +207,12 @@ namespace TaxiLoadingData
             };
             return taxi;
         }
-        /// <summary>
-        /// returns taxis and not parsed successfully lines
-        /// </summary>
-        /// <returns></returns>
-        public Tuple<TaxiAutorizations, string[]> TaxisFromCSV()
+        
+            /// <summary>
+            /// returns taxis and not parsed successfully lines
+            /// </summary>
+            /// <returns></returns>
+            public Tuple<TaxiAutorizations, string[]> TaxisFromCSV()
         {
            
             var taxis = new TaxiAutorizations();

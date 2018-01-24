@@ -50,12 +50,13 @@ namespace TaxiWebAndAPI.APIControllers
         /// <param name="city">the city name</param>
         /// <returns>an array of <see cref="TaxiAutorization"/></returns>
         [HttpGet]
-        public TaxiAutorizations GetTaxis(string city)
+        public async Task<TaxiAutorizations> GetTaxis(string city)
         {
             switch (city)
             {
                 case "Bucarest":
-                    return Program.BucarestTaxis;
+                    var buc = new LoadBucarestTaxis();
+                    return await buc.TaxiFromPlateSqliteAll();
                 default:
                     throw new ArgumentException("only for " + string.Join(",", GetCities()));
             }
@@ -66,9 +67,10 @@ namespace TaxiWebAndAPI.APIControllers
         /// <param name="plateNumber"></param>
         /// <returns></returns>
         [HttpGet]
-        public TaxiAutorization GetTaxi(string plateNumber)
+        public async Task<TaxiAutorization> GetTaxi(string plateNumber)
         {
-            return Program.BucarestTaxis.FindPlate(plateNumber);
+            var buc = new LoadBucarestTaxis();
+            return await buc.TaxiFromPlateSqlite(plateNumber);
         }
     }
 }
