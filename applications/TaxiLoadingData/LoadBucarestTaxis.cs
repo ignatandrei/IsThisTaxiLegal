@@ -1,5 +1,6 @@
-﻿using System;
-using System.Data.SQLite;
+﻿using Microsoft.Data.Sqlite;
+using System;
+//using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -53,9 +54,9 @@ namespace TaxiLoadingData
         public async Task<TaxiAutorizations> TaxiFromPlateSqliteAll ()
         {
             TaxiAutorizations ret = new TaxiAutorizations();
-            using (var con = new SQLiteConnection())
+            using (var con = new SqliteConnection())
             {
-                con.ConnectionString = "Data Source=taxis.sqlite3;Version=3;UseUTF16Encoding=True;";
+                con.ConnectionString = "Data Source=taxis.sqlite3;";
 
                 
                 await con.OpenAsync();
@@ -111,9 +112,9 @@ namespace TaxiLoadingData
         }
             public async Task<TaxiAutorization> TaxiFromPlateSqlite(string plateNumber)
         {
-            using(var con =new SQLiteConnection())
+            using(var con =new SqliteConnection())
             {
-                con.ConnectionString = "Data Source=taxis.sqlite3;Version=3;UseUTF16Encoding=True;";
+                con.ConnectionString = "Data Source=taxis.sqlite3;";
                 
                 //con.ConnectionString = "taxis.sqlite3";
                 await con.OpenAsync();
