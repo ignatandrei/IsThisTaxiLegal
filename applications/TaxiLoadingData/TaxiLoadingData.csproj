@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.4.1" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.106" />
   </ItemGroup>
 
   <ItemGroup>

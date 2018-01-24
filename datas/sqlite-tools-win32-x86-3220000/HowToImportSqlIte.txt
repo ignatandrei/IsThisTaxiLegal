@@ -1,0 +1,4 @@
+sqlite3
+.open ../taxis.sqlite3
+.import ../bucuresti.csv bucuresti
+.quit

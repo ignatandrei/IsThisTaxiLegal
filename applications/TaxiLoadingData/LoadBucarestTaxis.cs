@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SQLite;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using TaxiObjects;
 
 namespace TaxiLoadingData
@@ -15,7 +17,9 @@ namespace TaxiLoadingData
         public BucarestCSV(string line)
         {
             Line = line;
+            
         }
+        
         public IEnumerable<ValidationResult> Parse()
         {
             string message = null;
@@ -28,9 +32,14 @@ namespace TaxiLoadingData
                 StareAutTaxi = splitLine[1];
                 NumeTransportator = splitLine[2];
                 MarcaAuto = splitLine[3];
-                if (!string.IsNullOrWhiteSpace(splitLine[4]))
-                    AnFabricatieAuto = int.Parse(splitLine[4]);
+                var year = splitLine[4];
+                if (!string.IsNullOrWhiteSpace(year))
+                {
+                    if (year.Length > 4)
+                        year = year.Substring(0, 4);
 
+                    AnFabricatieAuto = int.Parse(year);
+                }
                 NrInmatriculareAuto = splitLine[5];
                 DateTime expiration = DateTime.MinValue;
                 string date = splitLine[6];
@@ -105,13 +114,105 @@ namespace TaxiLoadingData
 
 
         }
+        public async Task<TaxiAutorization> TaxiFromPlate(string plateNumber)
+        {
+            using(var con =new SQLiteConnection())
+            {
+                BucarestCSV bucarestCSV = null;
+                con.ConnectionString = "taxis.sqlite3";
+                await con.OpenAsync();
+                using (var cmd = con.CreateCommand())
+                {
+                    cmd.CommandText = "select * from bucuresti where NrInmatriculareAuto=@plate";
+                    cmd.Parameters.AddWithValue("@plate", plateNumber);
+                    using(var rd=await cmd.ExecuteReaderAsync())
+                    {
+                        while (await rd.ReadAsync())
+                        {
+                            // just first record
+                            if (bucarestCSV != null)
+                                break;
+                            Func<object, string> empty = (rec) =>
+                            {
+                                if(rec==null)
+                                    return "";
+                                if (rec == DBNull.Value)
+                                    return "";
+                                string value = rec.ToString();
+                                if (string.IsNullOrWhiteSpace(value))
+                                    return "";
+                                
+                                return value;
+                            };
+                            string line = "";
+                            line += empty(rd["Nr.Aut.Taxi"]);
+                            line +="|";
+                            line += empty(rd["Stare Aut.Taxi"]);
+                            line += "|";
+                            line += empty(rd["Nume Transportator"]);
+                            line += "|";
+                            line += empty(rd["Marca Auto"]);
+                            line += "|";
+                            line += empty(rd["An Fabricatie Auto"]);
+                            line += "|";
+                            line += empty(rd["Nr.Inmatriculare Auto"]);
+                            line += "|";
+                            line += empty(rd["Expirare Valabilitate"]);
+                            line += "|";
+                            line += empty(rd["Observatii"]); 
+                            bucarestCSV = new BucarestCSV(line);
+                            
+                        }
+                    }
+                }
+                return FromBucarestCSV(bucarestCSV);
+            }
+        }
+        private TaxiAutorization FromBucarestCSV(BucarestCSV bucarestLine)
+        {
+            if (bucarestLine == null)
+                return null;
+            var city = City.FromName("Bucarest");
+            var taxi = new TaxiAutorization();
+            taxi.Location = city;
+            taxi.NumberAutorization = bucarestLine.NrAutTaxi;
+            taxi.OtherDetails = bucarestLine.Observatii;
+            var state = bucarestLine.StareAutTaxi;
+            switch (state)
+            {
+                case var s when s.Contains("NEVALIDA"):
+                    taxi.State = LicenceState.NotValid;
+                    break;
+                case var s when s.Contains("VALIDA"):
+                    taxi.State = LicenceState.Valid;
+                    break;
+                case var s when s.Contains("ANALIZA"):
+                    taxi.State = LicenceState.ToBeAnalyzed;
+                    break;
+                default:
+                    taxi.State = LicenceState.Unknown;
+                    break;
+            }
+
+            var car = new Car();
+            car.ManufacturingDate = bucarestLine.AnFabricatieAuto;
+            car.Name = bucarestLine.MarcaAuto;
+            car.PlateNumber = bucarestLine.NrInmatriculareAuto;
+
+            taxi.CarLicensed = car;
+            taxi.PersonLicensedTo = new Licensee()
+            {
+                Name = bucarestLine.NumeTransportator
+            };
+            return taxi;
+        }
         /// <summary>
         /// returns taxis and not parsed successfully lines
         /// </summary>
         /// <returns></returns>
         public Tuple<TaxiAutorizations, string[]> TaxisFromCSV()
         {
-            var city = City.FromName("Bucarest");
+           
             var taxis = new TaxiAutorizations();
             var lines = LinesFromCSV();
             var records = lines
@@ -131,38 +232,8 @@ namespace TaxiLoadingData
                 .ToArray();
             foreach(var record in recordsNoErrors)
             {
-                var taxi = new TaxiAutorization();
-                taxi.Location = city;
-                taxi.NumberAutorization = record.NrAutTaxi;
-                taxi.OtherDetails = record.Observatii;
-                var state = record.StareAutTaxi;
-                switch (state)
-                {
-                    case var s when s.Contains("NEVALIDA"):
-                        taxi.State = LicenceState.NotValid;
-                        break;
-                    case var s when s.Contains("VALIDA"):
-                        taxi.State = LicenceState.Valid;
-                        break;
-                    case var s when s.Contains("ANALIZA"):
-                        taxi.State = LicenceState.ToBeAnalyzed;
-                        break;
-                    default:
-                        taxi.State = LicenceState.Unknown;
-                        break;
-                }
-
-                var car = new Car();
-                car.ManufacturingDate = record.AnFabricatieAuto;
-                car.Name = record.MarcaAuto;
-                car.PlateNumber = record.NrInmatriculareAuto;
-
-                taxi.CarLicensed = car;
-                taxi.PersonLicensedTo = new Licensee()
-                {
-                    Name = record.NumeTransportator
-                };
-                taxis.Add(taxi);
+                
+                taxis.Add(FromBucarestCSV(record));
 
             }
             return Tuple.Create(taxis, errorsLines);
