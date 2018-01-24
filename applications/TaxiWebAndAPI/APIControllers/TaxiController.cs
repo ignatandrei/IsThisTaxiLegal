@@ -68,7 +68,7 @@ namespace TaxiWebAndAPI.APIControllers
         [HttpGet]
         public TaxiAutorization GetTaxi(string plateNumber)
         {
-            return Program.BucarestTaxis.FirstOrDefault(it => it.CarLicensed.PlateNumber.ToLower() == plateNumber?.ToLower());
+            return Program.BucarestTaxis.FindPlate(plateNumber);
         }
     }
 }

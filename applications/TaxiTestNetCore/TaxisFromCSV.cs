@@ -11,7 +11,7 @@ namespace TaxiTestNetCore
     public class TaxisFromCSV
     {
         [TestMethod]
-        public void Bucarest()
+        public void BucarestAll()
         {
             var buc = new LoadBucarestTaxis();
             var taxis = buc.TaxisFromCSV();
