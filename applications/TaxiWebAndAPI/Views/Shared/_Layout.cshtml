@@ -30,24 +30,38 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">Despre aplicatie</a></li>
                     <li><a href="/swagger/">API</a></li>
                 </ul>
             </div>
         </div>
     </nav>
     <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2018 - TaxiWebAndAPI</p>
-            <p>Deployed on: <a href="http://isthistaxilegal.apphb.com">http://isthistaxilegal.apphb.com </a></p>
-            <p>API: <a href="http://isthistaxilegal.apphb.com/swagger/">http://isthistaxilegal.apphb.com/swagger/</a> </p>
-            <p>Sources: <a href="https://github.com/ignatandrei/IsThisTaxiLegal">https://github.com/ignatandrei/IsThisTaxiLegal</a> </p>
-            <p> Blog about:<a href="http://msprogrammer.serviciipeweb.ro/category/isthistaxilegal/">http://msprogrammer.serviciipeweb.ro/category/isthistaxilegal/</a></p>
-            <p> Android: <a href="https://play.google.com/store/apps/details?id=com.bellonaElectronics.VerifyTaxiApp&hl=en">https://play.google.com/store/apps/details?id=com.bellonaElectronics.VerifyTaxiApp&hl=en</a></p>
+        <div class="row content">
+            @RenderBody()
+        </div>
+        <div class="row">&nbsp;
+        </div>
+        <div class="row">
+            <hr />
+        </div>
+        <footer class="page-footer blue center-on-small-only">
+            <div class="container-fluid">
+                <div class="row">
+                    <p>Deployed on: <a href="http://isthistaxilegal.apphb.com">http://isthistaxilegal.apphb.com </a></p>
+                    <p>API: <a href="http://isthistaxilegal.apphb.com/swagger/">http://isthistaxilegal.apphb.com/swagger/</a> </p>
+                    <p>Sources: <a href="https://github.com/ignatandrei/IsThisTaxiLegal">https://github.com/ignatandrei/IsThisTaxiLegal</a> </p>
+                    <p> Blog about:<a href="http://msprogrammer.serviciipeweb.ro/category/isthistaxilegal/">http://msprogrammer.serviciipeweb.ro/category/isthistaxilegal/</a></p>
+                    <p> Android: <a href="https://play.google.com/store/apps/details?id=com.bellonaElectronics.VerifyTaxiApp&hl=en">https://play.google.com/store/apps/details?id=com.bellonaElectronics.VerifyTaxiApp&hl=en</a></p>
+                </div>
+            </div>
+            <!--Copyright-->
+            <div class="footer-copyright">
+                <div class="container-fluid">
+                    &copy; 2018 - TaxiWebAndAPI
+                </div>
+            </div>
+            <!--/.Copyright-->
         </footer>
     </div>
 
