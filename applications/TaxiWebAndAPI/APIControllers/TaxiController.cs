@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using TaxiLoadingData;
 using TaxiObjects;
@@ -71,6 +74,26 @@ namespace TaxiWebAndAPI.APIControllers
         {
             var buc = new LoadBucarestTaxis();
             return await buc.TaxiFromPlateSqlite(plateNumber);
+        }
+        [HttpPost]
+        public async Task<TaxiAutorization> GetFromPicture(string base64Picture)
+        {
+            string url = "https://testocr1s.azurewebsites.net/api/MyOCR?code=B1pNAijXy4GLAysR3Tv3EkPmX9uhJl5Td4lYLfaSbpDp4o9xu1oMLw==";
+
+            using (var httpClient = new HttpClient())
+            {
+
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var cs = new StringContent("{\"name\": \"" + base64Picture + "\" }", Encoding.UTF8, "application/json");
+
+                var response = await httpClient.PostAsync(url, cs);
+
+                response.EnsureSuccessStatusCode();
+                var taxiLicense=await response.Content.ReadAsStringAsync();
+                taxiLicense = taxiLicense.Replace("\"", "");
+                return await GetTaxi(taxiLicense);
+
+            }
         }
     }
 }
