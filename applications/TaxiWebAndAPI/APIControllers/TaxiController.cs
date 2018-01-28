@@ -78,6 +78,15 @@ namespace TaxiWebAndAPI.APIControllers
         [HttpPost]
         public async Task<TaxiAutorization> GetFromPicture(string base64Picture)
         {
+            var taxi = await GetNumberFromPicture(base64Picture);
+            if (string.IsNullOrWhiteSpace(taxi))
+                return null;
+            return await GetTaxi(taxi);
+        }
+        [HttpPost]
+        public async Task<string> GetNumberFromPicture(string base64Picture)
+        {
+            //return base64Picture == null ? "null" : "ASD"+base64Picture.Length;
             string url = "https://testocr1s.azurewebsites.net/api/MyOCR?code=B1pNAijXy4GLAysR3Tv3EkPmX9uhJl5Td4lYLfaSbpDp4o9xu1oMLw==";
 
             using (var httpClient = new HttpClient())
@@ -89,10 +98,9 @@ namespace TaxiWebAndAPI.APIControllers
                 var response = await httpClient.PostAsync(url, cs);
 
                 response.EnsureSuccessStatusCode();
-                var taxiLicense=await response.Content.ReadAsStringAsync();
+                var taxiLicense = await response.Content.ReadAsStringAsync();
                 taxiLicense = taxiLicense.Replace("\"", "");
-                return await GetTaxi(taxiLicense);
-
+                return taxiLicense;
             }
         }
     }

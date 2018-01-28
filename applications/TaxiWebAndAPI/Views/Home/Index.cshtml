@@ -4,6 +4,42 @@
 <h3>Deocamdata datele sunt disponibile doar pentru Bucuresti.</h3><br/>
 Numar inmatriculare:<br />
 <input type="text"  id="plateNumber"/>
-<button value="Find" onclick="findTaxi('plateNumber')">Verifica Taxi</button>
+<button value="Find" onclick="findTaxi('plateNumber','result')">Verifica Taxi</button>
 <br />
 <span id="result"></span>
+<input type="file" id="files" name="files"  />
+<script>
+
+    function handleFileSelect(evt) {
+        var files = evt.target.files; // FileList object
+
+        // files is a FileList of File objects. List some properties.
+        var output = [];
+        for (var i = 0, f; f = files[i]; i++) {
+            var reader = new FileReader();
+
+            // Closure to capture the file information.
+            reader.onload = (function (theFile) {
+                return function (e) {
+                    // Render thumbnail.
+                    var data = e.target.result;
+                    var find = "base64,";
+
+                    var n = data.indexOf(find);
+                    
+                    data = data.substr(n + find.length);
+                    window.alert('done' + data);
+                    findTaxiPicture(data, 'plateNumber')
+
+                };
+            })(f);
+
+            // Read in the image file as a data URL.
+            reader.readAsDataURL(f);
+
+        }
+        //window.alert(output[0]);
+    }
+
+    document.getElementById('files').addEventListener('change', handleFileSelect, false);
+</script>

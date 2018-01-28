@@ -18,6 +18,27 @@
             displayResult(data, idResult);
         });
 }
+function findTaxiPicture(base64Text, idResult) {
+
+    $("#" + idResult).text('please wait');
+    
+    if (base64Text == null || base64Text.length == 0)
+        return;
+
+    var urlTaxi = "/api/Taxi/GetFromPicture";
+    $.ajax({
+        url: urlTaxi,
+        method: "POST",
+        data: { base64Picture: base64Text}
+    })
+        .done(function (data) {
+            displayResult(data, idResult);
+        })
+        .fail(function (xhr) {
+            window.alert('error' + xhr);
+            displayResult(data, idResult);
+        });
+}
 function displayResult(data, idResult) {
     
     if (data === undefined) {
