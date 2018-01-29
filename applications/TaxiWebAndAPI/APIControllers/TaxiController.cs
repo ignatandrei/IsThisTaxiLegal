@@ -36,7 +36,8 @@ namespace TaxiWebAndAPI.APIControllers
         [HttpGet]
         public string[] GetCities()
         {
-            return new string[] { "Bucarest" };
+            LoadTaxis lt = new LoadTaxis();
+            return  lt.GetCities();
         }
         [HttpGet]
         public KeyValuePair<string,int>[] GetLicenceStates()
@@ -55,14 +56,8 @@ namespace TaxiWebAndAPI.APIControllers
         [HttpGet]
         public async Task<TaxiAutorizations> GetTaxis(string city)
         {
-            switch (city)
-            {
-                case "Bucarest":
-                    var buc = new LoadBucarestTaxis();
-                    return await buc.TaxiFromPlateSqliteAll();
-                default:
-                    throw new ArgumentException("only for " + string.Join(",", GetCities()));
-            }
+            LoadTaxis lt = new LoadTaxis();
+            return await lt.GetTaxis(city);
         }
         /// <summary>
         /// Get the taxy from the number - or null ( 204) if not found
@@ -72,8 +67,9 @@ namespace TaxiWebAndAPI.APIControllers
         [HttpGet]
         public async Task<TaxiAutorization> GetTaxi(string plateNumber)
         {
-            var buc = new LoadBucarestTaxis();
-            return await buc.TaxiFromPlateSqlite(plateNumber);
+            
+            var all = new LoadTaxis();
+            return await all.TaxiFromPlateSqlite(plateNumber);
         }
         [HttpPost]
         public async Task<TaxiAutorization> GetFromPicture(string base64Picture)

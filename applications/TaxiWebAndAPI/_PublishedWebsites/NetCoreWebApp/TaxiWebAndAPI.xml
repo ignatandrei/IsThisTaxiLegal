@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TaxiWebAndAPI</name>
+    </assembly>
+    <members>
+        <member name="M:TaxiWebAndAPI.APIControllers.TaxiController.GetCities">
+            <summary>
+            Get all cities registered
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TaxiWebAndAPI.APIControllers.TaxiController.GetTaxis(System.String)">
+            <summary>
+            Get all taxis for a city
+            <see cref="M:TaxiWebAndAPI.APIControllers.TaxiController.GetCities"/>
+            </summary>
+            <param name="city">the city name</param>
+            <returns>an array of <see cref="T:TaxiObjects.TaxiAutorization"/></returns>
+        </member>
+        <member name="M:TaxiWebAndAPI.APIControllers.TaxiController.GetTaxi(System.String)">
+            <summary>
+            Get the taxy from the number - or null ( 204) if not found
+            </summary>
+            <param name="plateNumber"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

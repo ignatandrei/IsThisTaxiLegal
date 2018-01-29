@@ -21,6 +21,39 @@ namespace TaxiTestNetCore
             aut.State.ShouldEqual(LicenceState.NotValid);
             aut = await buc.TaxiFromPlateSqlite("B09PVA");
             aut.State.ShouldEqual(LicenceState.ToBeAnalyzed);
+            aut = await buc.TaxiFromPlateSqlite("CJ23XYZ");
+            aut.ShouldBeNull();
+
+        }
+        [TestMethod]
+        public async Task ClujAll()
+        {
+            var cj = new LoadClujTaxis();
+            var aut = await cj.TaxiFromPlateSqliteAll();
+
+            aut.ShouldNotBeNull();
+            aut.Count.ShouldEqual(2714);
+        }
+        [TestMethod]
+        public async Task AllSampleData()
+        {
+            var all = new LoadTaxis();
+            var aut = await all.TaxiFromPlateSqlite("CJ14BPW");
+            aut.ShouldNotBeNull();
+            aut.State.ShouldEqual(LicenceState.Valid);
+            aut = await all.TaxiFromPlateSqlite("B30LOB");
+            aut?.State.ShouldEqual(LicenceState.Valid);
+        }
+        [TestMethod]
+        public async Task ClujSampleData()
+        {
+            var cj = new LoadClujTaxis();
+            var aut = await cj.TaxiFromPlateSqlite("CJ14BPW");
+            aut.ShouldNotBeNull();
+            aut.State.ShouldEqual(LicenceState.Valid);
+            aut = await cj.TaxiFromPlateSqlite("CJ23XYZ");
+            aut.ShouldBeNull();
+            
 
 
         }

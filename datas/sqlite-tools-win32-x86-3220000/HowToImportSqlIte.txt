@@ -1,4 +1,10 @@
+Import Bucuresti
 sqlite3
 .open ../taxis.sqlite3
 .import ../bucuresti.csv bucuresti
+.quit
+Import Cluj
+.open ../taxis.sqlite3
+.import ../cluj.csv cluj
+.update cluj set [ Nr. auto ]=replace([ Nr. auto ]," ","");
 .quit

@@ -5,12 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="..\..\datas\Bucuresti.csv" Link="Bucuresti.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="..\..\datas\taxis.sqlite3" Link="taxis.sqlite3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
