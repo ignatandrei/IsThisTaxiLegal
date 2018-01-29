@@ -13,6 +13,9 @@ namespace TaxiLoadingData
             if (string.IsNullOrWhiteSpace(plateNumber))
                 return null;
 
+            
+            plateNumber = plateNumber.Trim().Replace(" ", "").Replace("-","");
+
             if (plateNumber.Length < 3)
                 return null;
 

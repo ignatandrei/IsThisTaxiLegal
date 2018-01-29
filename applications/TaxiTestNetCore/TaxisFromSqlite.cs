@@ -45,6 +45,17 @@ namespace TaxiTestNetCore
             aut?.State.ShouldEqual(LicenceState.Valid);
         }
         [TestMethod]
+        public async Task AllSampleDataNoExtraChar()
+        {
+            var all = new LoadTaxis();
+            var aut = await all.TaxiFromPlateSqlite("B 30 LOB");
+            aut?.State.ShouldEqual(LicenceState.Valid);
+            aut = await all.TaxiFromPlateSqlite("B-30-LOB");
+            aut?.State.ShouldEqual(LicenceState.Valid);
+            aut = await all.TaxiFromPlateSqlite(" B 30 LOB ");
+            aut?.State.ShouldEqual(LicenceState.Valid);
+        }
+        [TestMethod]
         public async Task ClujSampleData()
         {
             var cj = new LoadClujTaxis();
