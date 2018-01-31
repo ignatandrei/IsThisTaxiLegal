@@ -11,6 +11,10 @@
   <PropertyGroup>
     <StartupFile>VerifyVersion.R</StartupFile>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <SettingsFile>
+    </SettingsFile>
+  </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties />
