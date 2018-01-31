@@ -30,6 +30,12 @@ namespace TaxiLoadingData
                 return await cj.TaxiFromPlateSqlite(plateNumber);
 
             }
+            if (plateNumber.Substring(0, 2).ToUpper() == "TM")
+            {
+                var tm = new LoadTimisoaraTaxis();
+                return await tm.TaxiFromPlateSqlite(plateNumber);
+
+            }
             //maybe search in both?
             return null;
         }
@@ -51,7 +57,7 @@ namespace TaxiLoadingData
         }
         public string[] GetCities()
         {
-            return new string[] { "Bucarest", "Cluj" };
+            return new string[] { "Bucuresti", "Cluj","Timisoara" };
         }
 
     }

@@ -42,7 +42,13 @@ namespace TaxiTestNetCore
             aut.ShouldNotBeNull();
             aut.State.ShouldEqual(LicenceState.Valid);
             aut = await all.TaxiFromPlateSqlite("B30LOB");
-            aut?.State.ShouldEqual(LicenceState.Valid);
+
+            aut.ShouldNotBeNull();
+            aut.State.ShouldEqual(LicenceState.Valid);
+            aut = await all.TaxiFromPlateSqlite("TM69ALB");
+            aut.ShouldNotBeNull();
+            aut.State.ShouldEqual(LicenceState.Valid);
+            
         }
         [TestMethod]
         public async Task AllSampleDataNoExtraChar()
@@ -65,6 +71,19 @@ namespace TaxiTestNetCore
             aut = await cj.TaxiFromPlateSqlite("CJ23XYZ");
             aut.ShouldBeNull();
             
+
+
+        }
+        [TestMethod]
+        public async Task TimisoaraSampleData()
+        {
+            var cj = new LoadTimisoaraTaxis();
+            var aut = await cj.TaxiFromPlateSqlite("TM69ALB");
+            aut.ShouldNotBeNull();
+            aut.State.ShouldEqual(LicenceState.Valid);
+            aut = await cj.TaxiFromPlateSqlite("TM69ALBU");
+            aut.ShouldBeNull();
+
 
 
         }

@@ -8,3 +8,8 @@ Import Cluj
 .import ../cluj.csv cluj
 .update cluj set [ Nr. auto ]=replace([ Nr. auto ]," ","");
 .quit
+Import Timisoara
+.open ../taxis.sqlite3
+.import ../timisoara.csv timisoara
+.update timisoara set [NumarInmatriculare]=replace([NumarInmatriculare]," ","");
+.quit
