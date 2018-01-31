@@ -19,9 +19,10 @@ data <- rbind(data,newRow)
 print(data)
 
 #print(getwd())
-#fileConn <- file(nameFile)
+fileConn <- file(nameFile)
+#writeLines(data,fileConn)
 #writeLines(c(paste("Bucuresti", url)), fileConn)
 #writeLines(c(paste("Bucuresti", url)), fileConn)
-#close(fileConn)
+close(fileConn)
 
 

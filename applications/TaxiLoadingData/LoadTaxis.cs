@@ -37,12 +37,14 @@ namespace TaxiLoadingData
         {
             switch (city)
             {
-                case "Bucarest":
+                case "Bucuresti":
                     var buc = new LoadBucarestTaxis();
                     return await buc.TaxiFromPlateSqliteAll();
                 case "Cluj":
                     var cluj = new LoadClujTaxis();
                     return await cluj.TaxiFromPlateSqliteAll();
+                case "Timisoara":
+
                 default:
                     throw new ArgumentException("only for " + string.Join(",", GetCities()));
             }

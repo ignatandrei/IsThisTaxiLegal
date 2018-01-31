@@ -177,7 +177,7 @@ namespace TaxiLoadingData
             if (bucarestLine == null)
                 return null;
             
-            var city = City.FromName("Bucarest");
+            var city = City.FromName("Bucuresti");
             var taxi = new TaxiAutorization();
             taxi.Location = city;
             taxi.NumberAutorization = bucarestLine.NrAutTaxi;
