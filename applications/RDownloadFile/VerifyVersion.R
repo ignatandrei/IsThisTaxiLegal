@@ -1,0 +1,5 @@
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load('XML', 'RSQLite', "magrittr", "RCurl", "rlist", "rvest", "pdftools", "dplyr", "devtools")
+source('Script.R')
+url <- findLastTaxiPDFBucuresti()
+print(url)

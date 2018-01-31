@@ -1,5 +1,5 @@
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load('XML', "magrittr", "RCurl", "rlist", "rvest", "pdftools", "dplyr", "devtools")
+pacman::p_load('XML','RSQLite', "magrittr", "RCurl", "rlist", "rvest", "pdftools", "dplyr", "devtools")
 #if (!require(XML)) install.packages('XML')
 #install.packages("magrittr")
 #install.packages("RCurl")
@@ -11,8 +11,11 @@ library(XML)
 library(RCurl)
 library(rlist)
 library(rvest)
+library(RSQLite)
+
 getwd()
-downloadTaxi <- function() {
+
+findLastTaxiPDFBucuresti <- function() {
 
     site <- "http://www.pmb.ro"
     # paste is concatenate strings !wtf!
@@ -25,18 +28,23 @@ downloadTaxi <- function() {
                 .[grepl(glob2rx("*autorizatiilor*"), .)]  # glob2rx  - transform regular expression
 
     #print(head(fnames))
-
-    pdfTaxi.url = paste(site, fnames[1], sep = "") # first url is the most recent
-    pdfTaxi.local="taxi.pdf" # how is the name of the local file downloaded
-    download.file(pdfTaxi.url, pdfTaxi.local, mode = "wb", cacheOK = F) #mode binary
-
-    #print(head(data))
     
-        getwd()# see current directory 
-    return(pdfTaxi.local);    # return need () !wtf!
+    pdfTaxi.url = paste(site, fnames[1], sep = "") # first url is the most recent
+    
+    
+    return(pdfTaxi.url);# return need () !wtf!
 }
 
-pdfTaxi <- downloadTaxi()
+
+
+downloadAndInterpretBucuresti <- function() {
+pdfTaxi <- findLastTaxiPDFBucuresti()
+pdfTaxi.local = "taxi.pdf" # how is the name of the local file downloaded
+download.file(pdfTaxi.url, pdfTaxi.local, mode = "wb", cacheOK = F) #mode binary
+
+#print(head(data))
+
+getwd() # see current directory 
 #pdfTaxi <-"taxi.pdf" #this for testing ,to not read html twice
 data <- pdf_text(pdfTaxi) # read all text
 #print(head(data))
@@ -52,6 +60,7 @@ splitData <- data %>%
 .[grepl("[A-Z]", .)] # the items that are interesting contains names
 
 splitData %>% head(10) %>% print # showing data
+}
 #print(head(splitData))
 # many tries - do not enter
 #write.table(data, "pdfTaxi.txt");
