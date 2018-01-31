@@ -1,6 +1,8 @@
 ﻿//using System.Data.SQLite;
 
+using Microsoft.Data.Sqlite;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TaxiObjects;
 
@@ -13,8 +15,8 @@ namespace TaxiLoadingData
             if (string.IsNullOrWhiteSpace(plateNumber))
                 return null;
 
-            
-            plateNumber = plateNumber.Trim().Replace(" ", "").Replace("-","");
+
+            plateNumber = plateNumber.Trim().Replace(" ", "").Replace("-", "");
 
             if (plateNumber.Length < 3)
                 return null;
@@ -55,10 +57,32 @@ namespace TaxiLoadingData
                     throw new ArgumentException("only for " + string.Join(",", GetCities()));
             }
         }
-        public string[] GetCities()
+        public async Task<string[]> GetCities()
         {
-            return new string[] { "Bucuresti", "Cluj","Timisoara" };
-        }
+            //return new string[] { "Bucuresti", "Cluj","Timisoara" };
+            List<string> data = new List<string>();
+            using (var con = new SqliteConnection())
+            {
+                con.ConnectionString = "Data Source=taxis.sqlite3;";
 
+                //con.ConnectionString = "taxis.sqlite3";
+                await con.OpenAsync();
+
+                using (var cmd = con.CreateCommand())
+                {
+                    cmd.CommandText = "select [City] from [LatestData]";
+
+                    using (var rd = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await rd.ReadAsync())
+                        {
+                            data.Add(rd["City"].ToString());
+                        }
+                    }
+                }
+
+            }
+            return data.ToArray();
+        }
     }
 }

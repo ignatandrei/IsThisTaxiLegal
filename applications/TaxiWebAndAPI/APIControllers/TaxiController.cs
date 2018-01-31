@@ -34,10 +34,17 @@ namespace TaxiWebAndAPI.APIControllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public string[] GetCities()
+        public async Task<string[]> GetCities()
         {
-            LoadTaxis lt = new LoadTaxis();
-            return  lt.GetCities();
+            try
+            {
+                LoadTaxis lt = new LoadTaxis();
+                return await lt.GetCities();
+            }
+            catch(Exception ex)
+            {
+                throw;  
+            }
         }
         [HttpGet]
         public KeyValuePair<string,int>[] GetLicenceStates()
