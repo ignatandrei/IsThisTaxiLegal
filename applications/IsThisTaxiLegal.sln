@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2026
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxiObjects", "TaxiObjects\TaxiObjects.csproj", "{B9987352-B018-4022-8435-D7BEC7F3AB68}"
 EndProject
@@ -10,8 +10,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxiTestNetCore", "TaxiTestNetCore\TaxiTestNetCore.csproj", "{5A529DC4-4C97-41F9-8167-AE923399D106}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxiWebAndAPI", "TaxiWebAndAPI\TaxiWebAndAPI.csproj", "{ECB01A73-73CA-4189-B5D6-1ABEE3A66C35}"
-EndProject
-Project("{DA7A21FA-8162-4350-AD77-A8D1B671F3ED}") = "RDownloadFile", "RDownloadFile\RDownloadFile.rxproj", "{9A184777-757F-4B46-8344-D56F70B0B55A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +33,6 @@ Global
 		{ECB01A73-73CA-4189-B5D6-1ABEE3A66C35}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECB01A73-73CA-4189-B5D6-1ABEE3A66C35}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECB01A73-73CA-4189-B5D6-1ABEE3A66C35}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A184777-757F-4B46-8344-D56F70B0B55A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A184777-757F-4B46-8344-D56F70B0B55A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A184777-757F-4B46-8344-D56F70B0B55A}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A184777-757F-4B46-8344-D56F70B0B55A}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
