@@ -1,4 +1,19 @@
-﻿function findTaxi(idPlateText, idResult) {
+﻿function randomTaxi(idResult) {
+    $("#" + idResult).text('please wait');
+    var urlTaxi = "/api/Taxi/GetRandomTaxiNumber";
+    $.ajax({
+        url: urlTaxi,
+        method: "GET"
+    })
+        .done(function (data) {
+            displayResult(data, idResult);
+        })
+        .fail(function (xhr) {
+            window.alert('error' + xhr);
+            displayResult(data, idResult);
+        });
+}
+function findTaxi(idPlateText, idResult) {
 
     $("#" + idResult).text('please wait');
     var plate = $("#" + idPlateText).val();
@@ -45,7 +60,7 @@ function displayResult(data, idResult) {
         window.alert('no taxi');
         ("#result").text('no taxi registered');
     }
-    $("#result").text(JSON.stringify(data));
+    $("#result").html("<b>"+JSON.stringify(data).replace(/["']/g,"")+"</b>");
 
 }
 
