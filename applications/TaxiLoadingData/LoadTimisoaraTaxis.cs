@@ -51,7 +51,7 @@ namespace TaxiLoadingData
                 TaxiAutorization taxi = null;
                 using (var cmd = con.CreateCommand())
                 {
-                    cmd.CommandText = "select * from cluj";
+                    cmd.CommandText = "select * from timisoara";
                     using (var rd = await cmd.ExecuteReaderAsync())
                     {
                         while (await rd.ReadAsync())

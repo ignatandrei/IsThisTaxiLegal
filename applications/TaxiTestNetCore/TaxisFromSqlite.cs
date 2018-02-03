@@ -77,11 +77,11 @@ namespace TaxiTestNetCore
         [TestMethod]
         public async Task TimisoaraSampleData()
         {
-            var cj = new LoadTimisoaraTaxis();
-            var aut = await cj.TaxiFromPlateSqlite("TM69ALB");
+            var tim = new LoadTimisoaraTaxis();
+            var aut = await tim.TaxiFromPlateSqlite("TM69ALB");
             aut.ShouldNotBeNull();
             aut.State.ShouldEqual(LicenceState.Valid);
-            aut = await cj.TaxiFromPlateSqlite("TM69ALBU");
+            aut = await tim.TaxiFromPlateSqlite("TM69ALBU");
             aut.ShouldBeNull();
 
 

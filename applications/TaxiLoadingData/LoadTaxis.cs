@@ -3,6 +3,7 @@
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TaxiObjects;
 
@@ -43,20 +44,66 @@ namespace TaxiLoadingData
         }
         public async Task<TaxiAutorizations> GetTaxis(string city)
         {
-            switch (city)
+            switch (city.ToLower())
             {
-                case "Bucuresti":
+                case "bucuresti":
                     var buc = new LoadBucarestTaxis();
                     return await buc.TaxiFromPlateSqliteAll();
-                case "Cluj":
+                case "cluj":
                     var cluj = new LoadClujTaxis();
                     return await cluj.TaxiFromPlateSqliteAll();
-                case "Timisoara":
-
+                case "timisoara":
+                    var tm = new LoadTimisoaraTaxis();
+                    return await tm.TaxiFromPlateSqliteAll();
                 default:
                     throw new ArgumentException("only for " + string.Join(",", GetCities()));
             }
         }
+        public async Task<string> GetRandomTaxiNumber()
+        {
+            try
+            {
+
+                string city = null;
+
+                using (var con = new SqliteConnection())
+                {
+                    con.ConnectionString = "Data Source=taxis.sqlite3;";
+
+
+                    await con.OpenAsync();
+                    while (city == null)
+                    {
+                        var id = DateTime.Now.Ticks % 3 + 1;
+                        using (var cmd = con.CreateCommand())
+                        {
+                            cmd.CommandText = "select [City] from [LatestData] where id=" + id;
+
+                            using (var rd = await cmd.ExecuteReaderAsync())
+                            {
+                                while (await rd.ReadAsync())
+                                {
+                                    city = rd["City"].ToString();
+                                }
+                            }
+                        }
+                    }
+
+                }
+                var all = (await GetTaxis(city)).Where(it => it.State == LicenceState.Valid).ToArray();
+                var max = all.Length;
+                var rnd = new Random(DateTime.Now.Millisecond);
+                var taxiAut = all[rnd.Next(0, max - 1)].CarLicensed.PlateNumber;
+                return taxiAut;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+
         public async Task<string[]> GetCities()
         {
             //return new string[] { "Bucuresti", "Cluj","Timisoara" };

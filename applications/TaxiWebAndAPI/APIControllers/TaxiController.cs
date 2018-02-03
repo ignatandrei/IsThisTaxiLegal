@@ -54,18 +54,26 @@ namespace TaxiWebAndAPI.APIControllers
                 .Select(it => new KeyValuePair<string, int>(it.ToString(), (int)it))
                 .ToArray();
         }
-        /// <summary>
-        /// Get all taxis for a city
-        /// <see cref="GetCities"/>
-        /// </summary>
-        /// <param name="city">the city name</param>
-        /// <returns>an array of <see cref="TaxiAutorization"/></returns>
         [HttpGet]
-        public async Task<TaxiAutorizations> GetTaxis(string city)
+        public async Task<string> GetRandomTaxiNumber()
         {
-            LoadTaxis lt = new LoadTaxis();
-            return await lt.GetTaxis(city);
+            var all = new LoadTaxis();
+            return await all.GetRandomTaxiNumber();
+            
+            
         }
+        ///// <summary>
+        ///// Get all taxis for a city
+        ///// <see cref="GetCities"/>
+        ///// </summary>
+        ///// <param name="city">the city name</param>
+        ///// <returns>an array of <see cref="TaxiAutorization"/></returns>
+        //[HttpGet]
+        //public async Task<TaxiAutorizations> GetTaxis(string city)
+        //{
+        //    LoadTaxis lt = new LoadTaxis();
+        //    return await lt.GetTaxis(city);
+        //}
         /// <summary>
         /// Get the taxy from the number - or null ( 204) if not found
         /// </summary>
