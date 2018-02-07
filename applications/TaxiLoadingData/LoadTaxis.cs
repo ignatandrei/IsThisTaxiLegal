@@ -61,6 +61,9 @@ namespace TaxiLoadingData
                 case "timisoara":
                     var tm = new LoadTimisoaraTaxis();
                     return await tm.TaxiFromPlateSqliteAll();
+                case "roman":
+                    var roman = new LoadRoman();
+                    return await roman.TaxiFromPlateSqliteAll();
                 default:
                     throw new ArgumentException("only for " + string.Join(",", GetCities()));
             }
