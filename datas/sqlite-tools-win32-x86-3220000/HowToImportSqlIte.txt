@@ -13,3 +13,8 @@ Import Timisoara
 .import ../timisoara.csv timisoara
 .update timisoara set [NumarInmatriculare]=replace([NumarInmatriculare]," ","");
 .quit
+Import Roman
+.open ../taxis.sqlite3
+.import ../Roman.csv roman
+.update roman set [ Nr. auto ]=replace([ Nr. auto ]," ","");
+.quit

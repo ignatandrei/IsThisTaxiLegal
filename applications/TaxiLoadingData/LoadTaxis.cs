@@ -39,6 +39,12 @@ namespace TaxiLoadingData
                 return await tm.TaxiFromPlateSqlite(plateNumber);
 
             }
+            if (plateNumber.Substring(0, 2).ToUpper() == "NT") // this might be an issue; how about Piatra Neamt;
+            {
+                var tm = new LoadRoman();
+                return await tm.TaxiFromPlateSqlite(plateNumber);
+
+            }
             //maybe search in both?
             return null;
         }

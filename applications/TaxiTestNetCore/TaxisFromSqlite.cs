@@ -124,5 +124,18 @@ namespace TaxiTestNetCore
             results.Count.ShouldNotEqual(0);
         }
 
+
+        [TestMethod]
+        public async Task RomanSampleData()
+        {
+            var romanLoader = new LoadRoman();
+            var aut = await romanLoader.TaxiFromPlateSqlite("NT10GNR");
+            aut.ShouldNotBeNull();
+            aut.State.ShouldEqual(LicenceState.Valid);
+            aut = await romanLoader.TaxiFromPlateSqlite("NT69ALBU");
+            aut.ShouldBeNull();
+
+        }
+
     }
 }
