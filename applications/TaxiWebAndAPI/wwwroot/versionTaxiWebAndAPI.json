@@ -4,14 +4,15 @@
     "Version": {
       "Major": 1,
       "Minor": 0,
-      "Build": 0,
-      "Revision": 1,
+      "Build": 2,
+      "Revision": 0,
       "MajorRevision": 0,
       "MinorRevision": 1
     },
-    "ReleaseNotes": "FirstVersion",
-    "DateRelease": "2018-02-10T17:16:08.2981817+02:00"
+    "ReleaseNotes": "versioning with first release notes",
+    "DateRelease": "2018-02-11T20:16:08.2981817+02:00"
   },
+
   {
     "Name": "TaxiWebAndAPI",
     "Version": {
@@ -30,13 +31,14 @@
     "Version": {
       "Major": 1,
       "Minor": 0,
-      "Build": 2,
-      "Revision": 0,
+      "Build": 0,
+      "Revision": 1,
       "MajorRevision": 0,
       "MinorRevision": 1
     },
-    "ReleaseNotes": "versioning with first release notes",
-    "DateRelease": "2018-02-11T17:16:08.2981817+02:00"
+    "ReleaseNotes": "FirstVersion",
+    "DateRelease": "2018-02-10T17:16:08.2981817+02:00"
   }
+
 
 ]

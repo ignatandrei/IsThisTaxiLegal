@@ -5,12 +5,12 @@
       "Major": 1,
       "Minor": 0,
       "Build": 0,
-      "Revision": 1,
+      "Revision": 2,
       "MajorRevision": 0,
       "MinorRevision": 1
     },
-    "ReleaseNotes": "FirstVersion",
-    "DateRelease": "2018-02-11T17:16:08.2981817+02:00"
+    "ReleaseNotes": "Removed release notes",
+    "DateRelease": "2018-02-11T20:16:08.2981817+02:00"
   },
   {
     "Name": "VersioningSummary",
@@ -18,11 +18,12 @@
       "Major": 1,
       "Minor": 0,
       "Build": 0,
-      "Revision": 2,
+      "Revision": 1,
       "MajorRevision": 0,
       "MinorRevision": 1
     },
-    "ReleaseNotes": "Removed release notes",
-    "DateRelease": "2018-02-11T20:16:08.2981817+02:00"
+    "ReleaseNotes": "FirstVersion",
+    "DateRelease": "2018-02-11T17:16:08.2981817+02:00"
   }
+
 ]
