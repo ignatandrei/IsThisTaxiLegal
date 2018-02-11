@@ -1,0 +1,70 @@
+﻿@using System.Linq;
+@model IEnumerable<VersioningSummary.VersionDll>
+
+@{
+    ViewData["Title"] = "Version";
+    var group = Model.GroupBy(it => it.Name).ToArray();
+}
+
+<h2>Version</h2>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReleaseNotes)
+            </th>
+            <th>
+               Version
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateRelease)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var key in group)
+{
+    var all = key.OrderByDescending(it => it.DateRelease).ToList();
+    var max = all[0];
+    all.Remove(max);
+        <tr>
+            <td><B>@max.Name</B></td>
+            <td>
+                @max.ReleaseNotes
+            </td>
+            <td>
+                @max.Version.ToString()
+            </td>
+            <td>
+                @max.DateRelease.ToString("yyyy MMMM dd HH:mm:ss")
+            </td>
+
+        </tr>
+
+    foreach (var item in all.OrderByDescending(it => it.DateRelease))
+    {
+        <tr>
+            <td>
+                
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReleaseNotes)
+            </td>
+            <td>
+                @item.Version.ToString()
+            </td>
+            <td>
+                @item.DateRelease.ToString("yyyy MMMM dd HH:mm:ss")
+            </td>
+
+        </tr>
+    }
+}
+    </tbody>
+</table>

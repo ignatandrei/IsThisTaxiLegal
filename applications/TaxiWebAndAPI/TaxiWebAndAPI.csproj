@@ -6,6 +6,7 @@
     <PublishDir>$(OutDir)_PublishedWebsites\NetCoreWebApp\</PublishDir> 
     <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
    <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
+    <Version>1.0.1</Version>
 </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -31,6 +32,13 @@
   <ItemGroup>
     <ProjectReference Include="..\TaxiLoadingData\TaxiLoadingData.csproj" />
     <ProjectReference Include="..\TaxiObjects\TaxiObjects.csproj" />
+    <ProjectReference Include="..\VersioningSummary\VersioningSummary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\versionTaxiWebAndAPI.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

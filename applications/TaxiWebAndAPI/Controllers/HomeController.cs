@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TaxiWebAndAPI.Models;
+using VersioningSummary;
 
 namespace TaxiWebAndAPI.Controllers
 {
@@ -32,6 +33,12 @@ namespace TaxiWebAndAPI.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public IActionResult Version()
+        {
+            var vc = new VersionComponents();
+            var data = vc.LoadCurrentDir();
+            return View(data);
         }
     }
 }

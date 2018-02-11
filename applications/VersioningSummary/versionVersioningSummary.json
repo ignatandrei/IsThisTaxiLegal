@@ -1,0 +1,15 @@
+﻿[
+  {
+    "Name": "VersioningSummary",
+    "Version": {
+      "Major": 1,
+      "Minor": 0,
+      "Build": 0,
+      "Revision": 1,
+      "MajorRevision": 0,
+      "MinorRevision": 1
+    },
+    "ReleaseNotes": "FirstVersion",
+    "DateRelease": "2018-02-11T17:16:08.2981817+02:00"
+  },
+]
