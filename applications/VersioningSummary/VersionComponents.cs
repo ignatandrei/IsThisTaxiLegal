@@ -101,7 +101,7 @@ namespace VersioningSummary
                     if (ret.Any(it => v.Version.ToString() == it.Version.ToString() && v.Name == it.Name))
                         continue;//exists already
                 }
-                v.ReleaseNotes = $"please put into a file named {nameFile}";
+                
                 v.DateRelease = DateTime.Now;
                 
                 if (File.Exists(item.Location))

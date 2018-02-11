@@ -3,7 +3,10 @@
 
 @{
     ViewData["Title"] = "Version";
-    var group = Model.GroupBy(it => it.Name).ToArray();
+
+    var group1 = Model.Where(it=>it.ReleaseNotes!=null).GroupBy(it => it.Name).OrderBy(it=>it.Key).ToArray();
+    var group2 = Model.Where(it => it.ReleaseNotes== null).GroupBy(it => it.Name).OrderBy(it => it.Key).ToArray();
+    var group = group1.Union(group2);
 }
 
 <h2>Version</h2>
@@ -36,13 +39,13 @@
         <tr>
             <td><B>@max.Name</B></td>
             <td>
-                @max.ReleaseNotes
+                <B>@max.ReleaseNotes<B>
             </td>
             <td>
-                @max.Version.ToString()
+                <B>@max.Version.ToString()<B>
             </td>
             <td>
-                @max.DateRelease.ToString("yyyy MMMM dd HH:mm:ss")
+                <B>@max.DateRelease.ToString("yyyy MMMM dd HH:mm:ss")<B>
             </td>
 
         </tr>
