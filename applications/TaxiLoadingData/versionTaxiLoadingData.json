@@ -1,4 +1,17 @@
-﻿[
+[
+  {
+    "Name": "TaxiLoadingData",
+    "Version": {
+      "Major": 1,
+      "Minor": 0,
+      "Build": 1,
+      "Revision": 1,
+      "MajorRevision": 0,
+      "MinorRevision": 1
+    },
+    "ReleaseNotes": "added Bacau and refactor load all taxis from ignatandrei",
+    "DateRelease": "2018-02-12T07:52:54.8185054+02:00"
+  },
   {
     "Name": "TaxiLoadingData",
     "Version": {
@@ -7,7 +20,7 @@
       "Build": 1,
       "Revision": 0,
       "MajorRevision": 0,
-      "MinorRevision": 1
+      "MinorRevision": 0
     },
     "ReleaseNotes": "Added versioning",
     "DateRelease": "2018-02-11T17:16:08.2981817+02:00"
@@ -25,6 +38,4 @@
     "ReleaseNotes": "FirstVersion",
     "DateRelease": "2018-02-10T17:16:08.2981817+02:00"
   }
-
-
 ]
