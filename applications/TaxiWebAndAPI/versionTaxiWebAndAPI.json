@@ -5,6 +5,19 @@
       "Major": 1,
       "Minor": 0,
       "Build": 2,
+      "Revision": 2,
+      "MajorRevision": 0,
+      "MinorRevision": 2
+    },
+    "ReleaseNotes": "modified loader and put Bacau on list from ignatandrei",
+    "DateRelease": "2018-02-12T08:36:44.1839672+02:00"
+  },
+  {
+    "Name": "TaxiWebAndAPI",
+    "Version": {
+      "Major": 1,
+      "Minor": 0,
+      "Build": 2,
       "Revision": 1,
       "MajorRevision": 0,
       "MinorRevision": 1
