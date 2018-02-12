@@ -60,23 +60,28 @@ namespace TaxiLoadingData
         }
         public async Task<TaxiAutorizations> GetTaxis(string city)
         {
+            ILoadTaxis taxiLoader = null;
             switch (city.ToLower())
             {
                 case "bucuresti":
-                    var buc = new LoadBucarestTaxis();
-                    return await buc.TaxiFromPlateSqliteAll();
+                    taxiLoader = new LoadBucarestTaxis();
+                    break;
                 case "cluj":
-                    var cluj = new LoadClujTaxis();
-                    return await cluj.TaxiFromPlateSqliteAll();
+                    taxiLoader = new LoadClujTaxis();
+                    break;
                 case "timisoara":
-                    var tm = new LoadTimisoaraTaxis();
-                    return await tm.TaxiFromPlateSqliteAll();
+                    taxiLoader = new LoadTimisoaraTaxis();
+                    break;
                 case "roman":
-                    var roman = new LoadRoman();
-                    return await roman.TaxiFromPlateSqliteAll();
+                    taxiLoader = new LoadRoman();
+                    break;
+                case "bacau":
+                    taxiLoader = new LoadBacauTaxis();
+                    break;
                 default:
                     throw new ArgumentException("only for " + string.Join(",", GetCities()));
             }
+            return await taxiLoader.TaxiFromPlateSqliteAll();
         }
         public async Task<string> GetRandomTaxiNumber()
         {
