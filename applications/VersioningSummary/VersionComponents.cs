@@ -114,7 +114,7 @@ namespace VersioningSummary
             return ret.ToArray();
         }
 
-        private VersionDll[] LoadFromFile(string fileName)
+        public VersionDll[] LoadFromFile(string fileName)
         {
             string val = File.ReadAllText(fileName);
             var data = JsonConvert.DeserializeObject<VersionDll[]>(val);

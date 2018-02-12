@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "VersioningGeneratorGitHub",
+    "Version": {
+      "Major": 1,
+      "Minor": 0,
+      "Build": 0,
+      "Revision": 0,
+      "MajorRevision": 0,
+      "MinorRevision": 0
+    },
+    "ReleaseNotes": "first release",
+    "DateRelease": "2018-02-12T06:34:35.3527702+02:00"
+  }
+]
