@@ -1,15 +1,19 @@
 ﻿using Microsoft.Data.Sqlite;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Text;
+//using System.Data.SQLite;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using TaxiObjects;
 
 namespace TaxiLoadingData
 {
-    public class LoadClujTaxis : ILoadTaxis
+    public class LoadBacauTaxis : ILoadTaxis
     {
+
         public async Task<TaxiAutorization> TaxiFromPlateSqlite(string plateNumber)
         {
             if (string.IsNullOrWhiteSpace(plateNumber))
@@ -24,7 +28,7 @@ namespace TaxiLoadingData
                 TaxiAutorization taxi = null;
                 using (var cmd = con.CreateCommand())
                 {
-                    cmd.CommandText = "select * from cluj where lower([ Nr. auto ])=@plate";
+                    cmd.CommandText = "select * from bacau where lower([Nr.inmatriculare ])=@plate";
                     cmd.Parameters.AddWithValue("@plate", plateNumber);
                     using (var rd = await cmd.ExecuteReaderAsync())
                     {
@@ -53,8 +57,8 @@ namespace TaxiLoadingData
                 TaxiAutorization taxi = null;
                 using (var cmd = con.CreateCommand())
                 {
-                    cmd.CommandText = "select * from cluj";
-                        using (var rd = await cmd.ExecuteReaderAsync())
+                    cmd.CommandText = "select * from bacau";
+                    using (var rd = await cmd.ExecuteReaderAsync())
                     {
                         while (await rd.ReadAsync())
                         {
@@ -87,14 +91,16 @@ namespace TaxiLoadingData
             };
 
             taxi = new TaxiAutorization();
-            taxi.Location = City.FromName("Cluj");
-            taxi.NumberAutorization = empty(rd["Nr. autoriz. TAXI "]);
+            taxi.Location = City.FromName("Bacau");
+            taxi.NumberAutorization = empty(rd["Nr.aut.taxi "]);
             taxi.State = LicenceState.Valid;
             taxi.PersonLicensedTo = new Licensee();
-            taxi.PersonLicensedTo.Name = empty(rd["Transportator autorizat"]);
+            taxi.PersonLicensedTo.Name = empty(rd["Denumire transportator autorizat "]);
             taxi.CarLicensed = new Car();
-            taxi.CarLicensed.PlateNumber = empty(rd[" Nr. auto "]);
+            taxi.CarLicensed.PlateNumber = empty(rd["Nr.inmatriculare "]);
+            taxi.CarLicensed.Name = empty(rd["Marca "]);
             return taxi;
         }
+
     }
 }

@@ -22,31 +22,41 @@ namespace TaxiLoadingData
             if (plateNumber.Length < 3)
                 return null;
 
-            if (plateNumber.Substring(0, 1).ToUpper() == "B")
+            TaxiAutorization ret = null;
+            Dictionary<string, ILoadTaxis> all = new Dictionary<string, ILoadTaxis>();
+            all.Add("BC", new LoadBacauTaxis());
+            all.Add("B", new LoadBucarestTaxis());
+            all.Add("CJ", new LoadClujTaxis());
+            all.Add("NT", new LoadRoman());
+            all.Add("TM", new LoadTimisoaraTaxis());
+            string county = plateNumber.Substring(0, 2).ToUpper();
+            if (all.ContainsKey(county))
             {
-                var buc = new LoadBucarestTaxis();
-                return await buc.TaxiFromPlateSqlite(plateNumber);
+                ret = await all[county].TaxiFromPlateSqlite(plateNumber);
             }
-            if (plateNumber.Substring(0, 2).ToUpper() == "CJ")
+            if (ret != null)
+                return ret;
+            //BUCURESTI
+            county = plateNumber.Substring(0, 1).ToUpper();
+            if (all.ContainsKey(county))
             {
-                var cj = new LoadClujTaxis();
-                return await cj.TaxiFromPlateSqlite(plateNumber);
+                ret = await all[county].TaxiFromPlateSqlite(plateNumber);
+            }
+            if (ret != null)
+                return ret;
 
-            }
-            if (plateNumber.Substring(0, 2).ToUpper() == "TM")
-            {
-                var tm = new LoadTimisoaraTaxis();
-                return await tm.TaxiFromPlateSqlite(plateNumber);
 
-            }
-            if (plateNumber.Substring(0, 2).ToUpper() == "NT") // this might be an issue; how about Piatra Neamt;
+            //search all one by one - not sure if sqlite supports threading
+            foreach (var item in all)
             {
-                var tm = new LoadRoman();
-                return await tm.TaxiFromPlateSqlite(plateNumber);
-
+                ret = await item.Value.TaxiFromPlateSqlite(plateNumber);
+                if (ret != null)
+                    return ret;
             }
-            //maybe search in both?
-            return null;
+
+
+
+            return ret;
         }
         public async Task<TaxiAutorizations> GetTaxis(string city)
         {

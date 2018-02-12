@@ -17,7 +17,7 @@ namespace TestVersioningSummary
             var data=vc.LoadCurrentDir();
             Assert.IsNotNull(data);
             Assert.IsTrue(data.Length > 0);
-            Assert.AreEqual(2,data.Count(it => it.Name.Contains("VersioningSummary")) );
+            Assert.IsTrue(data.Count(it => it.Name.Contains("VersioningSummary"))>0 );
         }
         //[TestMethod]
         //public void TestSerialize()

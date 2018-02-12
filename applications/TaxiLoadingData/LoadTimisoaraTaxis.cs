@@ -6,7 +6,7 @@ using TaxiObjects;
 
 namespace TaxiLoadingData
 {
-    public class LoadTimisoaraTaxis
+    public class LoadTimisoaraTaxis : ILoadTaxis
     {
         public async Task<TaxiAutorization> TaxiFromPlateSqlite(string plateNumber)
         {

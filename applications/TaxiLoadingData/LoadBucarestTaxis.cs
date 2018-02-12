@@ -10,7 +10,7 @@ using TaxiObjects;
 
 namespace TaxiLoadingData
 {
-    public class LoadBucarestTaxis
+    public class LoadBucarestTaxis : ILoadTaxis
     {
 
         private string[] LinesFromCSV()

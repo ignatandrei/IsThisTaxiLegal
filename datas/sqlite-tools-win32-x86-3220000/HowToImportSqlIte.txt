@@ -18,3 +18,10 @@ Import Roman
 .import ../Roman.csv roman
 .update roman set [ Nr. auto ]=replace([ Nr. auto ]," ","");
 .quit
+Import Bacau
+.open ../taxis.sqlite3
+.import ../bacau.csv bacau
+.update bacau set [Nr.inmatriculare ]=replace([Nr.inmatriculare ]," ","");
+.update bacau set [Nr.inmatriculare ]=trim([Nr.inmatriculare ])
+.quit
+

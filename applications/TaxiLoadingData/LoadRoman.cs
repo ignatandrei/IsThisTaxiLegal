@@ -8,7 +8,7 @@ using TaxiObjects;
 
 namespace TaxiLoadingData
 {
-    public class LoadRoman
+    public class LoadRoman : ILoadTaxis
     {
         public async Task<TaxiAutorization> TaxiFromPlateSqlite(string plateNumber)
         {

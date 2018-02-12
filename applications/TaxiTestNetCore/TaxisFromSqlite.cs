@@ -48,7 +48,18 @@ namespace TaxiTestNetCore
             aut = await all.TaxiFromPlateSqlite("TM69ALB");
             aut.ShouldNotBeNull();
             aut.State.ShouldEqual(LicenceState.Valid);
-            
+
+            aut = await all.TaxiFromPlateSqlite("NT10GNR");
+            aut.ShouldNotBeNull();
+            aut.State.ShouldEqual(LicenceState.Valid);
+
+            aut = await all.TaxiFromPlateSqlite("BC01ASV");
+            aut.ShouldNotBeNull();
+            aut.State.ShouldEqual(LicenceState.Valid);
+            //taxi from bucuresti in Bacau
+            aut = await all.TaxiFromPlateSqlite("B01GPK");
+            aut.ShouldNotBeNull();
+            aut.State.ShouldEqual(LicenceState.Valid); 
         }
         [TestMethod]
         public async Task AllSampleDataNoExtraChar()
@@ -135,6 +146,46 @@ namespace TaxiTestNetCore
             aut = await romanLoader.TaxiFromPlateSqlite("NT69ALBU");
             aut.ShouldBeNull();
 
+        }
+        [TestMethod]
+        public async Task RomanAll()
+        {
+            var t = new LoadRoman();
+            var aut = await t.TaxiFromPlateSqliteAll();
+
+            aut.ShouldNotBeNull();
+            aut.Count.ShouldEqual(256);
+        }
+        [TestMethod]
+        public async Task BacauSampleData()
+        {
+            var t = new LoadBacauTaxis();
+            var aut = await t.TaxiFromPlateSqlite("BC01ASV");
+            aut.ShouldNotBeNull();
+            aut.State.ShouldEqual(LicenceState.Valid);
+            aut = await t.TaxiFromPlateSqlite("BC01ASV1");
+            aut.ShouldBeNull();
+
+        }
+        [TestMethod]
+        public async Task BucurestiFromBacauSampleData()
+        {
+            var t = new LoadBacauTaxis();
+            var aut = await t.TaxiFromPlateSqlite("B01GPK");
+            aut.ShouldNotBeNull();
+            aut.State.ShouldEqual(LicenceState.Valid);
+            
+
+        }
+        
+        [TestMethod]
+        public async Task BacauAll()
+        {
+            var t = new LoadBacauTaxis();
+            var aut = await t.TaxiFromPlateSqliteAll();
+
+            aut.ShouldNotBeNull();
+            aut.Count.ShouldEqual(723);
         }
 
     }
