@@ -1,6 +1,6 @@
 # IsThisTaxiLegal
 
-![https://api.travis-ci.org/ignatandrei/IsThisTaxiLegal.svg?branch=master]
+![build and test](https://api.travis-ci.org/ignatandrei/IsThisTaxiLegal.svg?branch=master)
 
 Deployed on: http://isthistaxilegal.apphb.com 
  
