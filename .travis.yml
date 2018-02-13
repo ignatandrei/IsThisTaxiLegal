@@ -1,7 +1,7 @@
 language: csharp
 dotnet: 2.1.4
 install:
-- dotnet restore
+- dotnet restore applications/IsThisTaxiLegal.sln
 script:
-- dotnet build
-- dotnet test pplications/TaxiTestNetCore/TaxiTestNetCore.csproj
+- dotnet build applications/IsThisTaxiLegal.sln
+- dotnet test applications/TaxiTestNetCore/TaxiTestNetCore.csproj
