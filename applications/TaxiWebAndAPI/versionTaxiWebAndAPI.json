@@ -5,6 +5,19 @@
       "Major": 1,
       "Minor": 0,
       "Build": 2,
+      "Revision": 4,
+      "MajorRevision": 0,
+      "MinorRevision": 4
+    },
+    "ReleaseNotes": "applications insights from @ignatandreiradio cluj from @ignatandrei",
+    "DateRelease": "2018-02-17T12:36:31.4847381+02:00"
+  },
+  {
+    "Name": "TaxiWebAndAPI",
+    "Version": {
+      "Major": 1,
+      "Minor": 0,
+      "Build": 2,
       "Revision": 3,
       "MajorRevision": 0,
       "MinorRevision": 3
