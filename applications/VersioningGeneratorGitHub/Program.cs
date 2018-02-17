@@ -49,7 +49,7 @@ namespace VersioningGeneratorGitHub
                 foreach (var item in items.OrderBy(it => it.Committer.Date))
                 {
 
-                    text += item.Message + " from " + item.Committer.Name;
+                    text += item.Message + " from @" + item.Committer.Name;
 
                 }
 

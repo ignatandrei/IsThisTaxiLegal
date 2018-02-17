@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<h3>Deocamdata datele sunt disponibile doar pentru Bucuresti + Cluj + Timisoara + Roman+Bacau . In curind altele</h3><br />
+<h3>Deocamdata datele sunt disponibile doar pentru <span id="cities">Loading...</span>. In curind altele</h3><br />
 Numar inmatriculare:<br />
 <input type="text" id="plateNumber" />
 <button value="Find" onclick="findTaxi('plateNumber','result')">Verifica Taxi</button>
@@ -11,9 +11,33 @@ Introduceti poza cu numarul taxiului:
 <input type="file" id="files" name="files" />
 <br />
 <span id="result"></span>
+@section Scripts{ 
+
 
 <script>
+    
+    function LoadCities() {
+        var urlTaxi = "/api/Taxi/GetCities";
+        $.ajax({
+            url: urlTaxi,
+            method: "GET"
+        })
+            .done(function (data) {
+                var name = "";
+                
+                for (var i = 0; i < data.length; i++) {
+                    name += data[i] + " ";
 
+                }
+                $("#cities").html(name);
+            })
+            .fail(function (xhr) {
+                window.alert('error' + xhr);
+                displayResult(data, idResult);
+            });
+
+    }
+    LoadCities();
     function handleFileSelect(evt) {
         var files = evt.target.files; // FileList object
 
@@ -47,3 +71,4 @@ Introduceti poza cu numarul taxiului:
 
     document.getElementById('files').addEventListener('change', handleFileSelect, false);
 </script>
+    }

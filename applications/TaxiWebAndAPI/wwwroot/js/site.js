@@ -58,7 +58,7 @@ function displayResult(data, idResult) {
     
     if (data === undefined) {
         window.alert('no taxi');
-        ("#result").text('no taxi registered');
+        $("#result").html('no taxi registered');
     }
     $("#result").html("<b>"+JSON.stringify(data).replace(/["']/g,"")+"</b>");
 

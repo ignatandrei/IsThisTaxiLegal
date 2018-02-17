@@ -39,7 +39,8 @@ namespace TaxiWebAndAPI.APIControllers
             try
             {
                 LoadTaxis lt = new LoadTaxis();
-                return await lt.GetCities();
+                var data= await lt.GetCities();
+                return data.OrderBy(it => it).ToArray();
             }
             catch(Exception ex)
             {
