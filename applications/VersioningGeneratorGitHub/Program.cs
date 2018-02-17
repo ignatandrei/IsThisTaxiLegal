@@ -1,11 +1,13 @@
 ﻿using Newtonsoft.Json;
 using Octokit;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using VersioningSummary;
 
 namespace VersioningGeneratorGitHub
@@ -14,9 +16,13 @@ namespace VersioningGeneratorGitHub
     {
         static void Main(string[] args)
         {
-            var Url = @"https://github.com/ignatandrei/IsThisTaxiLegal/";
-            var client = new GitHubClient(new ProductHeaderValue("Versioning"));
-            var id = client.Repository.Get("ignatandrei", "IsThisTaxiLegal").GetAwaiter().GetResult().Id;
+            MainTask(args).GetAwaiter();
+        }
+        static async Task MainTask(string[] args)
+        {
+            //var Url = @"https://github.com/ignatandrei/IsThisTaxiLegal/";
+            //var client = new GitHubClient(new ProductHeaderValue("Versioning"));
+            //var id = client.Repository.Get("ignatandrei", "IsThisTaxiLegal").GetAwaiter().GetResult().Id;
             var jsonFile = new string[]
             {
                 "applications/TaxiWebAndAPI/versionTaxiWebAndAPI.json",
@@ -26,35 +32,34 @@ namespace VersioningGeneratorGitHub
                 "applications/VersioningSummary/versionVersioningSummary.json"
 
             };
-            foreach (var pathJSON in jsonFile) {
-                var folder = pathJSON.Substring(0, pathJSON.LastIndexOf("/"));
-                string fileJSON = pathJSON.Substring(pathJSON.LastIndexOf("/") + 1);
-                var requestFolder = new CommitRequest { Path = folder };
-                var listFolder = client.Repository.Commit.GetAll(id, requestFolder).GetAwaiter().GetResult().ToList();
-
-                var requestJSON = new CommitRequest { Path = pathJSON };
-                var listJSON = client.Repository.Commit.GetAll(id, requestJSON).GetAwaiter().GetResult().ToList();
-                var dateJSON = listJSON.Select(it => it.Commit.Committer.Date).Max();
-
-
-
-                listFolder.RemoveAll(it => it.Commit.Committer.Date <= dateJSON);
-
-                Console.Write(listFolder.Count);
-                string text = "";
-                if (listFolder.Count == 0)
+            var length = jsonFile.Length;
+            var tasks = new Task[length];
+            var arr = new GitVersionSourceControlFileFolder[length];
+            for (int i = 0; i < length; i++)
+            {
+                arr[i] = new GitVersionSourceControlFileFolder("ignatandrei", "IsThisTaxiLegal", jsonFile[i]);
+                tasks[i]=arr[i].Init();
+            }
+            await Task.WhenAll(tasks);
+            for (int i = 0; i < length; i++)
+            {
+                if (!arr[i].HasModifications())
                     continue;
+
+
+            
+                
+                string text = "";
                 //there is a difference
-                var items = listFolder.Select(it => it.Commit).ToArray();
-                foreach (var item in items.OrderBy(it => it.Committer.Date))
+                foreach (var item in arr[i].FolderCommits.OrderBy(it => it.CommitedDate))
                 {
 
-                    text += item.Message + " from @" + item.Committer.Name;
+                    text += item.Message + " from @" + item.Committer;
 
                 }
 
                 //obtain file
-                var existingFile = client.Repository.Content.GetAllContents(id, pathJSON).GetAwaiter().GetResult().First().Content;
+                var existingFile = arr[i].File;
                 var tmp = Path.Combine(Path.GetTempPath(), Path.GetFileNameWithoutExtension(Path.GetTempFileName()) + ".txt");
                 File.WriteAllText(tmp, existingFile);
 
@@ -69,7 +74,7 @@ namespace VersioningGeneratorGitHub
                 newVersion.Version = new Version(latestVersion.Version.Major, latestVersion.Version.Minor, latestVersion.Version.Build, latestVersion.Version.Revision + 1);
                 versions.Insert(0, newVersion);
 
-                tmp = Path.Combine(Path.GetTempPath(), fileJSON);
+                tmp = Path.Combine(Path.GetTempPath(), jsonFile[i]);
                 var vals = JsonConvert.SerializeObject(versions.ToArray());
 
                 File.WriteAllText(tmp, vals);

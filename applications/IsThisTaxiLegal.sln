@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VersioningSummary", "Versio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestVersioningSummary", "TestVersioningSummary\TestVersioningSummary.csproj", "{26F0A99A-7AEB-41AF-9B19-F9F199A04488}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VersioningGeneratorGitHub", "VersioningGeneratorGitHub\VersioningGeneratorGitHub.csproj", "{11D66996-1411-4B1C-90C6-C3D981D1210E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VersioningGeneratorGitHub", "VersioningGeneratorGitHub\VersioningGeneratorGitHub.csproj", "{11D66996-1411-4B1C-90C6-C3D981D1210E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VersioningSourceControl", "VersioningSourceControl\VersioningSourceControl.csproj", "{D95E127A-7360-4D02-A538-8CAE58E31F89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{11D66996-1411-4B1C-90C6-C3D981D1210E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11D66996-1411-4B1C-90C6-C3D981D1210E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11D66996-1411-4B1C-90C6-C3D981D1210E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D95E127A-7360-4D02-A538-8CAE58E31F89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D95E127A-7360-4D02-A538-8CAE58E31F89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D95E127A-7360-4D02-A538-8CAE58E31F89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D95E127A-7360-4D02-A538-8CAE58E31F89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
