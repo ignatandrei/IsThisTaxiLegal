@@ -5,6 +5,19 @@
       "Major": 1,
       "Minor": 0,
       "Build": 2,
+      "Revision": 3,
+      "MajorRevision": 0,
+      "MinorRevision": 3
+    },
+    "ReleaseNotes": "get cities now dynamic from @ignatandrei",
+    "DateRelease": "2018-02-17T12:20:17.3225353+02:00"
+  },
+  {
+    "Name": "TaxiWebAndAPI",
+    "Version": {
+      "Major": 1,
+      "Minor": 0,
+      "Build": 2,
       "Revision": 2,
       "MajorRevision": 0,
       "MinorRevision": 2

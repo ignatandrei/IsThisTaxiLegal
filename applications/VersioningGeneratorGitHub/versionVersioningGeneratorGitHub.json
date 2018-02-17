@@ -1,4 +1,16 @@
-[
+[  {
+    "Name": "VersioningGeneratorGitHub",
+    "Version": {
+      "Major": 1,
+      "Minor": 0,
+      "Build": 0,
+      "Revision": 2,
+      "MajorRevision": 0,
+      "MinorRevision": 2
+    },
+    "ReleaseNotes": "get cities now dynamic from @ignatandrei",
+    "DateRelease": "2018-02-17T12:20:20.0035888+02:00"
+  },
   {
     "Name": "VersioningGeneratorGitHub",
     "Version": {
@@ -7,7 +19,7 @@
       "Build": 0,
       "Revision": 1,
       "MajorRevision": 0,
-      "MinorRevision": 0
+      "MinorRevision": 1
     },
     "ReleaseNotes": "adding list of files",
     "DateRelease": "2018-02-12T06:34:35.3527702+02:00"
