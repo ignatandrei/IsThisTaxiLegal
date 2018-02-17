@@ -7,6 +7,8 @@
     <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
    <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
     <Version>1.0.2.2</Version>
+    <ApplicationInsightsResourceId>/subscriptions/ae855b1d-8e62-4516-b4ce-b22b599bffa3/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/TaxiWebAndAPI</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/ae855b1d-8e62-4516-b4ce-b22b599bffa3/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/TaxiWebAndAPI</ApplicationInsightsAnnotationResourceId>
 </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -19,6 +21,7 @@
     <None Remove="_PublishedWebsites\**" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="1.1.0" />
@@ -39,6 +42,10 @@
     <Content Update="versionTaxiWebAndAPI.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
 </Project>
