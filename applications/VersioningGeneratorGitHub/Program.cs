@@ -71,7 +71,7 @@ namespace VersioningGeneratorGitHub
                 var latestVersion = versions.OrderByDescending(it => it.Version).First();
                 var newVersion = new VersionDll();
                 newVersion.Name = latestVersion.Name;
-                newVersion.DateRelease = DateTime.Now;
+                //newVersion.DateRelease = DateTime.Now;
                 newVersion.ReleaseNotes = text;
                 newVersion.Version = new Version(latestVersion.Version.Major, latestVersion.Version.Minor, latestVersion.Version.Build, latestVersion.Version.Revision + 1);
                 versions.Insert(0, newVersion);
