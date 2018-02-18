@@ -288,3 +288,4 @@ __pycache__/
 *.xsd.cs
 /datas/Bucurestiold.csv
 /applications/TaxiWebAndAPI/_PublishedWebsites/NetCoreWebApp
+/applications/TaxiWebAndAPI/taxis.sqlite3

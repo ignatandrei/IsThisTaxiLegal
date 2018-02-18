@@ -4,9 +4,10 @@
 @{
     ViewData["Title"] = "Version";
 
-    var group1 = Model.Where(it=>it.ReleaseNotes!=null).GroupBy(it => it.Name).OrderBy(it=>it.Key).ToArray();
-    var group2 = Model.Where(it => it.ReleaseNotes== null).GroupBy(it => it.Name).OrderBy(it => it.Key).ToArray();
-    var group = group1.Union(group2);
+    var groupReleaseWithDate = Model.Where(it=>it.DateRelease!=null && it.ReleaseNotes!=null).GroupBy(it => it.Name).OrderBy(it=>it.Key).ToArray();
+    var groupNoReleaseWithDate = Model.Where(it => it.DateRelease != null && it.ReleaseNotes== null).GroupBy(it => it.Name).OrderBy(it => it.Key).ToArray();
+    var groupDate = groupReleaseWithDate.Union(groupNoReleaseWithDate);
+    var groupNoDate = Model.Where(it => it.DateRelease == null);
 }
 
 <h2>Version</h2>
@@ -31,7 +32,7 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var key in group)
+@foreach (var key in groupDate)
 {
     var all = key.OrderByDescending(it => it.DateRelease).ToList();
     var max = all[0];
@@ -45,7 +46,7 @@
                 <B>@max.Version.ToString()<B>
             </td>
             <td>
-                <B>@max.DateRelease.ToString("yyyy MMMM dd HH:mm:ss")<B>
+                <B>@max.DateRelease.Value.ToString("yyyy MMMM dd HH:mm:ss")<B>
             </td>
 
         </tr>
@@ -63,7 +64,7 @@
                 @item.Version.ToString()
             </td>
             <td>
-                @item.DateRelease.ToString("yyyy MMMM dd HH:mm:ss")
+                @item.DateRelease.Value.ToString("yyyy MMMM dd HH:mm:ss")
             </td>
 
         </tr>
@@ -71,3 +72,13 @@
 }
     </tbody>
 </table>
+<h1>
+    Reference, but not found location
+</h1>
+<ol>
+    @foreach (var item in groupNoDate)
+    {
+        <li>@item.Name</li>
+    }
+
+</ol>
