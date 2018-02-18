@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using VersioningSourceControl;
 
@@ -10,6 +11,7 @@ namespace VersioningGeneratorGitHub
     class GitVersionSourceControlFileFolder : VersionSourceControlFileFolder
     {
         static ConcurrentDictionary<string, long> repoId=new ConcurrentDictionary<string, long>();
+        static SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
         public GitVersionSourceControlFileFolder(string owner, string repositoryName,string pathFile):base(pathFile)
         {
             Owner = owner;
@@ -58,12 +60,34 @@ namespace VersioningGeneratorGitHub
         public override async Task Init()
         {
             client = new GitHubClient(new ProductHeaderValue("Versioning"));
-            repoId.AddOrUpdate(
-                Owner + "/" + RepositoryName,
-                (await client.Repository.Get(Owner, RepositoryName)).Id,
-                (name, id) => id);
+            string repoFullName = Owner + "/" + RepositoryName;
+            if (!repoId.ContainsKey(repoFullName))
+            {
+                await semaphoreSlim.WaitAsync();
+                try
+                {
+                    if (!repoId.TryGetValue(repoFullName, out idRepository))
+                    {
+                        Console.WriteLine("get value");
+                        idRepository = (await client.Repository.Get(Owner, RepositoryName)).Id;
+                        //Console.WriteLine(Thread.CurrentThread.ManagedThreadId + "--" + idRepository);
 
-            idRepository = repoId[Owner + "/" + RepositoryName]; 
+                        repoId.AddOrUpdate(
+                            repoFullName,
+                            idRepository,
+                            (key, oldValue) => idRepository);
+                    }
+                }
+                finally
+                {
+                    semaphoreSlim.Release();
+                }
+            }
+
+            if(!repoId.TryGetValue(repoFullName,out idRepository))
+            {
+                throw new ArgumentException("cannot find" + repoFullName);
+            }
 
         }
     }

@@ -16,7 +16,7 @@ namespace VersioningGeneratorGitHub
     {
         static void Main(string[] args)
         {
-            MainTask(args).GetAwaiter();
+            MainTask(args).GetAwaiter().GetResult();
         }
         static async Task MainTask(string[] args)
         {
@@ -37,10 +37,12 @@ namespace VersioningGeneratorGitHub
             var arr = new GitVersionSourceControlFileFolder[length];
             for (int i = 0; i < length; i++)
             {
-                arr[i] = new GitVersionSourceControlFileFolder("ignatandrei", "IsThisTaxiLegal", jsonFile[i]);
-                tasks[i]=arr[i].Init();
+                var j = i;
+                arr[j] = new GitVersionSourceControlFileFolder("ignatandrei", "IsThisTaxiLegal", jsonFile[i]);
+                tasks[j]=arr[j].Init().ContinueWith(t=>arr[j].FindFromSourceControl()).Result;
             }
             await Task.WhenAll(tasks);
+            Console.WriteLine("loaded all");
             for (int i = 0; i < length; i++)
             {
                 if (!arr[i].HasModifications())
@@ -73,12 +75,16 @@ namespace VersioningGeneratorGitHub
                 newVersion.ReleaseNotes = text;
                 newVersion.Version = new Version(latestVersion.Version.Major, latestVersion.Version.Minor, latestVersion.Version.Build, latestVersion.Version.Revision + 1);
                 versions.Insert(0, newVersion);
+                var vals = JsonConvert.SerializeObject(versions.ToArray(),Formatting.Indented);
 
-                tmp = Path.Combine(Path.GetTempPath(), jsonFile[i]);
-                var vals = JsonConvert.SerializeObject(versions.ToArray());
+                tmp = Path.Combine(Path.GetTempPath(), jsonFile[i].Replace('/', Path.DirectorySeparatorChar));
+                Console.WriteLine(tmp);
+                var dir = Path.GetDirectoryName(tmp);
+                if (!Directory.Exists(dir))
+                    Directory.CreateDirectory(dir);
 
                 File.WriteAllText(tmp, vals);
-                Console.WriteLine(tmp);
+                
                 Thread.Sleep(1000);
                 var startInfo = new ProcessStartInfo("notepad.exe");
                 startInfo.WindowStyle = ProcessWindowStyle.Normal;
