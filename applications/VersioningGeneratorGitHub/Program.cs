@@ -56,7 +56,7 @@ namespace VersioningGeneratorGitHub
                 foreach (var item in arr[i].FolderCommits.OrderBy(it => it.CommitedDate))
                 {
 
-                    text += item.Message + " from @" + item.Committer;
+                    text +=item.Id+ "->"+item.Message + " from @" + item.Committer +";";
 
                 }
 

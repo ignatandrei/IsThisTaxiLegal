@@ -29,7 +29,8 @@ namespace VersioningGeneratorGitHub
             {
                 CommitedDate = g.Commit.Committer.Date,
                 Committer = g.Commit.Committer.Name,
-                Message = g.Commit.Message
+                Message = g.Commit.Message,
+                Id=g.Sha
             };
         public override async Task FindFromSourceControl()
         {
@@ -48,6 +49,7 @@ namespace VersioningGeneratorGitHub
             FolderCommits =
                 (await client.Repository.Commit.GetAll(
                     idRepository, requestFolder))
+                .Where(it=>it.Commit.Committer.Date>dateJSON)
                 .Select(translate)
                 .ToArray();
 
