@@ -102,7 +102,7 @@ namespace VersioningSummary
                         continue;//exists already
                 }
                 
-                v.DateRelease = DateTime.Now;
+                
                 
                 if (File.Exists(item.Location))
                 {
