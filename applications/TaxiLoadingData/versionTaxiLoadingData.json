@@ -5,6 +5,19 @@
       "Major": 1,
       "Minor": 0,
       "Build": 1,
+      "Revision": 3,
+      "MajorRevision": 0,
+      "MinorRevision": 3
+    },
+    "ReleaseNotes": "Fixes #6 from @ignatandrei",
+    "DateRelease": "2018-02-18T10:09:26.8841097+02:00"
+  },
+  {
+    "Name": "TaxiLoadingData",
+    "Version": {
+      "Major": 1,
+      "Minor": 0,
+      "Build": 1,
       "Revision": 2,
       "MajorRevision": 0,
       "MinorRevision": 2

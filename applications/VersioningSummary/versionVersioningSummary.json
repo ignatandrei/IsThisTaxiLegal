@@ -1,4 +1,17 @@
-﻿[
+[
+  {
+    "Name": "VersioningSummary",
+    "Version": {
+      "Major": 1,
+      "Minor": 0,
+      "Build": 0,
+      "Revision": 4,
+      "MajorRevision": 0,
+      "MinorRevision": 4
+    },
+    "ReleaseNotes": "list of files from @ignatandrei",
+    "DateRelease": "2018-02-18T10:09:29.9519067+02:00"
+  },
   {
     "Name": "VersioningSummary",
     "Version": {
