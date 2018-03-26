@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:VerifyTaxiApp.ViewModels;"
+             x:Class="VerifyTaxiApp.Views.MainPage"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.BindingContext>
+        <vm:MainPageViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Image Source="orangebg.jpg" Aspect="Fill"></Image>
+            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="15*"/>
+                    <!--<RowDefinition Height="10*"/>
+                    <RowDefinition Height="70*"/>-->
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="10*"/>
+
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="15*"/>
+                    <ColumnDefinition Width="70*"/>
+                    <ColumnDefinition Width="15*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0"  Grid.ColumnSpan="3"  Text="Is this taxi legal?" HorizontalTextAlignment="Center"  FontSize="26" HorizontalOptions="Center" Margin="0,40,0,0"  TextColor="#707070"/>
+
+                
+
+                <!--textbox numar inmatriculare-->
+                <Entry Grid.Row="1" Grid.ColumnSpan="3" Text="{Binding PlateNumber}" 
+                       HorizontalTextAlignment="Center"
+                       Placeholder="Introdu numarul de inmatriculare"
+                       FontSize="20"
+                       TextColor="#707070"/>
+                <!--<Label Grid.Row="2" Grid.ColumnSpan="3" Text="OR"  FontSize="20" HorizontalOptions="Center"  TextColor="#707070"/>
+                -->
+                <!-- camera -->
+                <!--
+                <Grid Grid.Row="3" Grid.Column="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="175"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50*"/>
+                                <ColumnDefinition Width="50*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" Text="Take Picture" Command="{Binding TakePictureCommand}" BackgroundColor="#E6E6FA" TextColor="#707070"/>
+                            <Button Grid.Column="1" Text="Pick Picture" Command="{Binding PickPictureCommand}" BackgroundColor="#E6E6FA" TextColor="#707070"/>
+                        </Grid>
+
+                        <Image Grid.Row="1" Source="{Binding MainImage}" Aspect="AspectFill" >
+                        </Image>
+
+                    </Grid>
+                </Grid>-->
+                <Grid Grid.Row="2"  Grid.Column="1">
+                    <Image Source="TaxiLogo.png" Aspect="Fill"></Image>
+                </Grid>
+                <!--send button-->
+                <Button Grid.Row="3" Grid.Column="1" Command="{Binding SendNumberCommand}" 
+                        Text="Verifica"
+                        BackgroundColor="#E6E6FA"
+                        TextColor="#707070"
+                        WidthRequest="2"
+                        HeightRequest="2">
+                </Button>
+
+
+                <StackLayout Grid.Row="4" Grid.Column="1" VerticalOptions="Center" Orientation="Horizontal" HorizontalOptions="Center" Margin="0,0,25,0">
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" HorizontalOptions="EndAndExpand" VerticalOptions="Center">
+                        <ActivityIndicator.Color>
+                            <OnPlatform x:TypeArguments="Color" Android="{StaticResource Accent}"/>
+                        </ActivityIndicator.Color>
+                    </ActivityIndicator>
+                    <Label Text="{Binding Message}" VerticalOptions="Center"  HorizontalOptions="StartAndExpand"/>
+                </StackLayout>
+                <Image Grid.Row="4"  Grid.Column="2" Source="info.png" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,0,25,0">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToInfoCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+            </Grid>
+
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

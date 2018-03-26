@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VerifyTaxiApp.Views.InfoPage"
+             xmlns:vm="clr-namespace:VerifyTaxiApp.ViewModels;"
+             NavigationPage.HasNavigationBar="{Binding BackButtonExists}">
+    <ContentPage.BindingContext>
+        <vm:InfoViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Image Source="orangebg.jpg" Aspect="Fill"></Image>
+            <StackLayout Margin="10,30,10,0">
+                <Label Text="" />
+                <Label Text="Despre Is this taxi legal" FontSize="18" VerticalTextAlignment="Center" HorizontalOptions="Center" />
+                <Label Text="" FontSize="18" VerticalTextAlignment="Center" HorizontalOptions="Center"/>
+                <Label Text="Aplicatia identifica dupa numarul de inmatriculare autozitatia de functionare si ofera informatii despre sofer/firma si masina autorizata." FontSize="18" VerticalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap"/>
+                <Label Text="" />
+
+
+                <Label Text="Aceasta aplicatie a fost dezvoltata de:" FontSize="18" VerticalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap"/>
+
+                <Label Text="Bellona Electronics" FontSize="18" VerticalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" TextColor="CadetBlue" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToBellonaCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text="in parteneriat cu " FontSize="18" VerticalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap"/>
+                <Label Text="ADCES" FontSize="18" VerticalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" TextColor="CadetBlue" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToAdcesCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text="" />
+                <Label Text="Orasele in care pot fi cautate taxiuri sunt:" FontSize="18" VerticalTextAlignment="Center" HorizontalOptions="Center"/>
+                <ListView x:Name="CitiesListView" ItemsSource="{Binding Cities}" 
+                                  HorizontalOptions="FillAndExpand" BackgroundColor="Transparent"
+                                  VerticalOptions="FillAndExpand" 
+                                  HasUnevenRows="True" 
+                                  SeparatorVisibility="None"
+                                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                                  CachingStrategy="RecycleElement">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+
+                                <StackLayout>
+                                    <Label Text="{Binding}" 
+                                                           FontSize="18" 
+                                                           HorizontalOptions="CenterAndExpand" 
+                                                           VerticalOptions="CenterAndExpand"
+                                                           LineBreakMode="WordWrap"></Label>
+                                </StackLayout>
+
+
+
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
