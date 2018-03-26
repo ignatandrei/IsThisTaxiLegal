@@ -1,6 +1,7 @@
 Import Bucuresti
 sqlite3
 .open ../taxis.sqlite3
+delete from bucuresti
 .import ../bucuresti.csv bucuresti
 .quit
 Import Cluj
