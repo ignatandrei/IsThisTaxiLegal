@@ -21,7 +21,7 @@ namespace TaxiTestNetCore
             aut.State.ShouldEqual(LicenceState.NotValid);
             aut = await buc.TaxiFromPlateSqlite("B09PVA");
             aut.State.ShouldEqual(LicenceState.ToBeAnalyzed);
-            aut = await buc.TaxiFromPlateSqlite("CJ23XYZ");
+            aut = await buc.TaxiFromPlateSqlite("B88RNG");
             aut.ShouldBeNull();
 
         }
@@ -113,26 +113,35 @@ namespace TaxiTestNetCore
         [TestMethod]
         public async Task BucarestVerifyImportSqlLite()
         {
-            var buc = new LoadBucarestTaxis();
-            var taxis = buc.TaxisFromCSV();
-            var taxisOK = taxis.Item1;
+            try
+            {
+                var buc = new LoadBucarestTaxis();
+                var taxis = buc.TaxisFromCSV();
+                var taxisOK = taxis.Item1;
 
-            var results =await buc.TaxiFromPlateSqliteAll();
-            results.RemoveAll(it => string.IsNullOrWhiteSpace(it.NumberAutorization));
-            taxisOK.RemoveAll(it => string.IsNullOrWhiteSpace(it.NumberAutorization));
-            results.ShouldNotBeEmpty();
-            taxisOK.ShouldNotBeEmpty();
-            foreach (var res in results)
-            {                
-                res.ShouldNotBeNull();                
-                var dataCSV = taxisOK.FindNumber(res.NumberAutorization);
-                dataCSV.ShouldNotBeNull("cannot find autorization :" + res.NumberAutorization);                
-                dataCSV.NumberAutorization.ShouldEqual(res.NumberAutorization);
-                
+                var results = await buc.TaxiFromPlateSqliteAll();
+                results.RemoveAll(it => string.IsNullOrWhiteSpace(it.NumberAutorization));
+                taxisOK.RemoveAll(it => string.IsNullOrWhiteSpace(it.NumberAutorization));
+                results.ShouldNotBeEmpty();
+                taxisOK.ShouldNotBeEmpty();
+                foreach (var res in results)
+                {
+                    res.ShouldNotBeNull();
+                    var dataCSV = taxisOK.FindNumber(res.NumberAutorization);
+                    dataCSV.ShouldNotBeNull("cannot find autorization :" + res.NumberAutorization);
+                    dataCSV.NumberAutorization.ShouldEqual(res.NumberAutorization);
+
                     taxisOK.Remove(dataCSV);
-            };
-            taxisOK.Count.ShouldEqual(0,"not loaded sqlite:"+string.Join(",",taxisOK.Select(it=>it.NumberAutorization)));
-            results.Count.ShouldNotEqual(0);
+                };
+                taxisOK.Count.ShouldEqual(0, "not loaded sqlite:" + string.Join(",", taxisOK.Select(it => it.NumberAutorization)));
+                results.Count.ShouldNotEqual(0);
+            }
+            catch(System.Exception ex)
+            {
+                System.Console.WriteLine("!!!!" + ex.Message);
+                System.Console.WriteLine("!!!!" + ex.StackTrace);
+                throw;
+            }
         }
 
 
