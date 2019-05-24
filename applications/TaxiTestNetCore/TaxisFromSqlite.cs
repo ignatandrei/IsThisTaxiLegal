@@ -19,9 +19,9 @@ namespace TaxiTestNetCore
             aut.State.ShouldEqual(LicenceState.Valid);
             aut = await buc.TaxiFromPlateSqlite("B30FUV");
             aut.State.ShouldEqual(LicenceState.NotValid);
-            aut = await buc.TaxiFromPlateSqlite("B09PVA");
-            aut.State.ShouldEqual(LicenceState.ToBeAnalyzed);
             aut = await buc.TaxiFromPlateSqlite("B88RNG");
+            aut.State.ShouldEqual(LicenceState.ToBeAnalyzed);
+            aut = await buc.TaxiFromPlateSqlite("CJ23XYZ");
             aut.ShouldBeNull();
 
         }
