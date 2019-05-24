@@ -83,9 +83,20 @@ namespace TaxiWebAndAPI.APIControllers
         [HttpGet]
         public async Task<TaxiAutorization> GetTaxi(string plateNumber)
         {
-            
-            var all = new LoadTaxis();
-            return await all.TaxiFromPlateSqlite(plateNumber);
+            Console.WriteLine("!!!getting " + plateNumber);
+            try
+            {
+                var all = new LoadTaxis();
+                var res=await all.TaxiFromPlateSqlite(plateNumber);
+                Console.WriteLine("!!! obtaining " + (res != null));
+                return res;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("!!!exception " + ex.Message);
+                Console.WriteLine("!!!exception " + ex.StackTrace);
+                throw;
+            }
         }
         [HttpPost]
         public async Task<TaxiAutorization> GetFromPicture(string base64Picture)
