@@ -43,6 +43,10 @@ namespace TaxiLoadingData
                     {
                         expiration = new DateTime(2020, 02, 27);
                     }
+                    else if(date == "8.06.202")
+                    {
+                        expiration = new DateTime(2020, 06, 08);
+                    }
                     else if (!DateTime.TryParseExact(date, "dd.mm.yyyy", null, DateTimeStyles.None, out expiration))
                     {
                         if (!DateTime.TryParseExact(date, "d.mm.yyyy", null, DateTimeStyles.None, out expiration))
